@@ -1,0 +1,107 @@
+<!--
+  Generated template for the ResultadoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar  color="aat">
+    <ion-title>Resultados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-col col-12>
+      <ion-card>
+          <ion-card-header text-center>
+              <strong ion-text  color="aat">Singles 1</strong>
+            </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-6></ion-col>
+              <ion-col>Set 1</ion-col>
+              <ion-col>Set 2</ion-col>
+              <ion-col>Set 3</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col  col-6>{{localNombre}}</ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col  col-6>{{visitaNombre}}</ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                </ion-row>
+          </ion-card-content>
+      </ion-card>
+  </ion-col>
+  <ion-col col-12>
+      <ion-card>
+          <ion-card-header text-center>
+              <strong ion-text  color="aat">Singles 2</strong>
+           </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-6></ion-col>
+              <ion-col>Set 1</ion-col>
+              <ion-col>Set 2</ion-col>
+              <ion-col>Set 3</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col  col-6>{{localNombre}}</ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col  col-6>{{visitaNombre}}</ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                </ion-row>
+          </ion-card-content>
+      </ion-card>
+  </ion-col>
+
+  <ion-col col-12>
+      <ion-card>
+          <ion-card-header text-center>
+              <strong ion-text  color="aat">Dobles</strong>
+           </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-6></ion-col>
+              <ion-col>Set 1</ion-col>
+              <ion-col>Set 2</ion-col>
+              <ion-col>Set 3</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col  col-6>{{localNombre}}</ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col  col-6>{{visitaNombre}}</ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                  <ion-col><ion-input type="number" max="7"></ion-input></ion-col>
+                </ion-row>
+          </ion-card-content>
+      </ion-card>
+  </ion-col>
+    
+
+    
+    <button ion-button secondary full (click)="sendPlayers()">
+        Guardar
+    </button>
+
+</ion-content>
