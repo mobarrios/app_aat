@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Platform } from 'ionic-angular';
-import { EncuentrosService } from '../../providers/encuentros/encuentros';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { EncuentrosService, Encuentro } from '../../providers/encuentros/encuentros';
 
 import { Storage } from '@ionic/storage';
+import { UtilsService } from '../../providers/utils/utils';
 
 
 /**
@@ -43,8 +44,8 @@ export class JugadoresPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public _es:EncuentrosService,
+              public _utils:UtilsService,
               public storage:Storage,
-              private toastCtrl: ToastController,
               public platform : Platform
             ){
 
@@ -69,16 +70,16 @@ export class JugadoresPage {
 
 
       if(this.enc)
-     {
-        this.singles1local = this.enc.jugadorLocalSingle1;
-        this.singles1visita = this.enc.jugadorVisitaSingle1;
-        this.singles2local = this.enc.jugadorLocalSingle2;
-        this.singles2visita = this.enc.jugadorVisitaSingle2;
-        this.dobleslocal1 = this.enc.jugadorLocal1Doble;
-        this.dobleslocal2 = this.enc.jugadorLocal2Doble;
-        this.doblesvisita1 = this.enc.jugadorVisita1Doble;
-        this.doblesvisita2 = this.enc.jugadorVisita2Doble;      
-     }
+        {
+          this.singles1local = this.enc.jugadorLocalSingle1;
+          this.singles1visita = this.enc.jugadorVisitaSingle1;
+          this.singles2local = this.enc.jugadorLocalSingle2;
+          this.singles2visita = this.enc.jugadorVisitaSingle2;
+          this.dobleslocal1 = this.enc.jugadorLocal1Doble;
+          this.dobleslocal2 = this.enc.jugadorLocal2Doble;
+          this.doblesvisita1 = this.enc.jugadorVisita1Doble;
+          this.doblesvisita2 = this.enc.jugadorVisita2Doble;      
+        }
   
 
 
@@ -88,7 +89,6 @@ export class JugadoresPage {
        this.visita = data['equipoVisitante']['id'];
        this.localNombre = data['equipoLocal']['club']['nombre'];
        this.visitaNombre = data['equipoVisitante']['club']['nombre'];
-       console.log(this.localNombre);
        this.getBfLocal();
        this.getBfVisita();
       });
@@ -115,8 +115,15 @@ export class JugadoresPage {
     let s2 = {};
     let d1 = {};
 
+    if(this.singles1local == this.singles2local)
+      this._utils.showMessages('Alerta','El Jugador del Equipo Local, Single 1, no puede ser el mismo que el Single2',true);
+     
+    if(this.singles1visita == this.singles2visita)
+      this._utils.showMessages('Alerta','El Jugador del Equipo Visitante, Single 1, no puede ser el mismo que el Single2',true);
+      
 
-    this.toastCtrl.create({message:'Guardando...', duration:500}).present();
+
+    //this._utils.showLoading('Guardando...');
 
 
 
@@ -140,7 +147,7 @@ export class JugadoresPage {
       }
 
 
-    this.toastCtrl.create({message:'Datos Guardados.', duration:500}).present();
+    //this._utils.showLoading('Datos Guardados');
    }
 
   }
@@ -149,14 +156,3 @@ export class JugadoresPage {
   
 
 
-export interface Encuentro { 
-     id: string;
-     jugadorLocalSingle1:string;
-     jugadorVisitaSingle1:string;
-     jugadorLocalSingle2:string;
-     jugadorVisitaSingle2:string;
-     jugadorLocal1Doble:string;
-     jugadorLocal2Doble:string;
-     jugadorVisita1Doble:string;
-     jugadorVisita2Doble:string;
-}

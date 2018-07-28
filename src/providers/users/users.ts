@@ -40,7 +40,10 @@ export class UsersService {
   constructor(private http: HttpClient, 
               public alertCtrl: AlertController,
               public storage:Storage, 
-              public platform:Platform) {}
+              public platform:Platform) {
+
+
+              }
 
 
 
@@ -58,9 +61,9 @@ export class UsersService {
     //data.append("password",pass);
 
     //testing
-    //this.body =  {'email':'leandro.antonelli2@gmail.com' , 'password':'Aa123456!'};
+    this.body =  {'email':'leandro.antonelli@gmail.com' , 'password':'Aa123456!'};
 
-    this.body =  {'email':user, 'password':pass};
+    //this.body =  {'email':user, 'password':pass};
 
     let url = this.url + "/Account/Login"; 
     // promise
@@ -75,18 +78,31 @@ export class UsersService {
 
   isActive()
   {
-    // let token ;
+    let token ;
 
-    // if(this.platform.is('cordova'))
-    //   token = this.storage.get('token');
-    // else
-    //   token = localStorage.getItem('token');
+    if(this.platform.is('cordova'))
+    {
+      this.storage.get('user').then((val) => 
+      {
+        if(val)
+          token = val;
+      });
 
-    // if(token)
-    //   return true;
-    // else
-    //   return false;
-      
+    }else{
+        token = JSON.parse(localStorage.getItem('user'));
+    }
+
+   
+
+    if(token)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
   }
 
   getToken()
@@ -112,9 +128,9 @@ export class UsersService {
   {
     if(this.platform.is('cordova'))
       {
-        this.storage.clear();
+        this.storage.remove('user');
       }else{
-        localStorage.clear();
+        localStorage.removeItem('user');
       } 
   }
 

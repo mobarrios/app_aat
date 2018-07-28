@@ -19,19 +19,14 @@ export class HomePage {
   public encuentro:any = [];
   public club:any;
 
-  public enc = {
-    'id':'',
-    'status': 1,
-  };
 
-  
   constructor(public navCtrl: NavController, 
               private _es:EncuentrosService, 
               public _us:UsersService,
               public storage:Storage,
               public _utilsService:UtilsService) {
-
-    this.club = _us.getUserData().club;
+        
+          this.club = _us.getUserData().club;
   }
 
   goToResult(encuentrosId:any)
@@ -58,8 +53,7 @@ export class HomePage {
        // this._utilsService.dismissMessages();
 
         this.encuentro = result ;
-        this.enc.id = result[0].id;
-        this.enc.status = 1;
+        
 
         //this.storage.set('encuentro',this.enc);
         //localStorage.setItem('encuentros', JSON.stringify(this.enc));
@@ -67,7 +61,7 @@ export class HomePage {
 
     },(err)=>{
       //this._utilsService.dismissMessages();
-      this._utilsService.showMessages('Error',err['message'],true) ;
+      this._utilsService.showMessages('Error','No se Puede Acceder al Servidor, por favor, Intente nuevamente.',true) ;
     });
 
     refresher.complete();

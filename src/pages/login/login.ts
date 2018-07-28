@@ -72,7 +72,7 @@ export class LoginPage {
 
     },(err)=>{
       this._utilsService.dismissMessages();
-      this._utilsService.showMessages('Error',err['message'],true) ;
+      this._utilsService.showMessages('Error','Credenciales Erroneas, Por favor, intente nuevamente.',true) ;
 
     });
     

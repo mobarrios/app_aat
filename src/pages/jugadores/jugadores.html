@@ -31,7 +31,7 @@
               <ion-item>
                   <ion-label>{{visitaNombre}} </ion-label>
                   <ion-select [(ngModel)]="singles1visita" >
-                    <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                    <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                   </ion-select>
                 </ion-item>
         </ion-card-content>    
@@ -45,14 +45,14 @@
             <ion-item>
                 <ion-label>{{localNombre}}</ion-label>
                 <ion-select [(ngModel)]="singles2local">
-                    <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                    <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                 </ion-select>
               </ion-item>
 
               <ion-item>
                   <ion-label>{{visitaNombre}}</ion-label>
                   <ion-select [(ngModel)]="singles2visita">
-                      <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                      <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                   </ion-select>
                 </ion-item>
         </ion-card-content>    
@@ -66,33 +66,33 @@
             <ion-item>
                 <ion-label>{{localNombre}}</ion-label>
                 <ion-select [(ngModel)]="dobleslocal1">
-                    <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                    <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                 </ion-select>
               </ion-item>
             
               <ion-item>
                   <ion-label>{{localNombre}}</ion-label>
                   <ion-select [(ngModel)]="dobleslocal2">
-                      <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                      <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                   </ion-select>
                 </ion-item>
 
               <ion-item>
                   <ion-label>{{visitaNombre}}</ion-label>
                   <ion-select [(ngModel)]="doblesvisita1">
-                      <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                      <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                   </ion-select>
                 </ion-item>
                 <ion-item>
                     <ion-label>{{visitaNombre}}</ion-label>
                     <ion-select [(ngModel)]="doblesvisita2">
-                        <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.nombre}}</ion-option>
+                        <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                     </ion-select>
                   </ion-item>
         </ion-card-content>
     </ion-card>
 
-        <button ion-button secondary full (click)="sendResult()">
+        <button ion-button secondary full (click)="sendPlayers()">
             Guardar
         </button>
     
