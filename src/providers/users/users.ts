@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { AlertController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { DataBaseProvider } from '../data-base/dataBase';
+import { SQLite } from '../../../node_modules/@ionic-native/sqlite';
 
 
 /*
@@ -40,7 +42,8 @@ export class UsersService {
   constructor(private http: HttpClient, 
               public alertCtrl: AlertController,
               public storage:Storage, 
-              public platform:Platform) {
+              public platform:Platform,
+              public _db:DataBaseProvider) {
 
 
               }
@@ -61,16 +64,20 @@ export class UsersService {
     //data.append("password",pass);
 
     //testing
-    this.body =  {'email':'leandro.antonelli@gmail.com' , 'password':'Aa123456!'};
+    this.body =  {'email':'leandro.antonelli2@gmail.com' , 'password':'Aa123456!'};
 
     //this.body =  {'email':user, 'password':pass};
 
     let url = this.url + "/Account/Login"; 
+    
     // promise
     return new Promise((resolve, reject)=>{
         this.http.post(url, this.body,this.httpOptions).subscribe(
-          res=>{resolve(res);
-        },(err)=>{reject(err);})
+          res=>
+          {
+            //guarda en DB
+            this.storeUser(res).then(data => resolve(res));
+          },(err)=>{reject(err);})
     });
 
 
@@ -92,16 +99,13 @@ export class UsersService {
         token = JSON.parse(localStorage.getItem('user'));
     }
 
-   
 
-    if(token)
-    {
+    if(token){
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
+  
 
   }
 
@@ -121,6 +125,7 @@ export class UsersService {
         this.tk = data.token;
     }
 
+    console.log(this.tk);
     return this.tk;
   }
   
@@ -132,6 +137,12 @@ export class UsersService {
       }else{
         localStorage.removeItem('user');
       } 
+
+    let sql = 'DELETE from users';
+    this._db.db.executeSql(sql);
+
+    let sql1 = 'DELETE from encuentros';
+    this._db.db.executeSql(sql1);
   }
 
   getUserData()
@@ -150,6 +161,28 @@ export class UsersService {
     }
 
     return this.user;
+
+    // let sql = 'SELECT * FROM users';
+
+    // return this._db.db.executeSql(sql)
+    //         .then(response => {
+    //           let user = [];
+    //           for (let index = 0; index < response.rows.length; index++) {
+    //             user.push( response.rows.item(index) );
+    //           }
+    //          // console.table(user[0].token);
+    //           return Promise.resolve( user );
+    //         })
+    //         .catch(error => Promise.reject(error));
+
+  }
+
+
+  //save user in db
+  storeUser(res)
+  {
+    let sql = 'INSERT INTO users(token, club, expiration, username) VALUES(?,?,?,?)';
+    return this._db.db.executeSql( sql ,[res.token,res.club.nombre,res.expiration]);
   }
   
 }

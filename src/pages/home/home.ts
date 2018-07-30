@@ -27,6 +27,7 @@ export class HomePage {
               public _utilsService:UtilsService) {
         
           this.club = _us.getUserData().club;
+          this.listEncuentrosStore();
   }
 
   goToResult(encuentrosId:any)
@@ -35,9 +36,9 @@ export class HomePage {
     this.navCtrl.push(ResultadoPage,{'encuentrosId':encuentrosId});
   }
 
-  goTomatchDetail()
+  goTomatchDetail(encuentrosId:any)
   {
-    this.navCtrl.push(MatchDetailPage);
+    this.navCtrl.push(MatchDetailPage,{'encuentrosId':encuentrosId});
   }
 
   buenaFe(encuentrosId:any){
@@ -46,29 +47,43 @@ export class HomePage {
 
   listEncuentros(refresher)
   {
+    this._es.getEncuentros();
     
-    //this._utilsService.showMessages('Mensaje','Actualizando ...');
+    // //this._utilsService.showMessages('Mensaje','Actualizando ...');
 
-    this._es.getEncuentros().then((result)=>{
-       // this._utilsService.dismissMessages();
+    // this._es.getEncuentros().then((result)=>{
+    //    // this._utilsService.dismissMessages();
 
-        this.encuentro = result ;
-        
+    //     this.encuentro = result ;
+      
+    //     //this.storage.set('encuentro',this.enc);
+    //     //localStorage.setItem('encuentros', JSON.stringify(this.enc));
 
-        //this.storage.set('encuentro',this.enc);
-        //localStorage.setItem('encuentros', JSON.stringify(this.enc));
+
+    // },(err)=>{
+    //   //this._utilsService.dismissMessages();
+    //   this._utilsService.showMessages('Error','No se Puede Acceder al Servidor, por favor, Intente nuevamente.',true) ;
+    // });
 
 
-    },(err)=>{
-      //this._utilsService.dismissMessages();
-      this._utilsService.showMessages('Error','No se Puede Acceder al Servidor, por favor, Intente nuevamente.',true) ;
-    });
-
+    
+    this.listEncuentrosStore();
     refresher.complete();
 
     //this._es.getEncuentros().subscribe( data=>{ this.encuentro = data; console.table(data) });
   }
 
+
+  listEncuentrosStore()
+  {
+    this._es.getEncuentrosStore().then((result)=>{
+      let enc = [];
+      for (let index = 0; index < result.rows.length; index++) {
+        enc.push( result.rows.item(index) );
+      }
+      this.encuentro =  enc ;
+    });
+  }
 
   logout()
   {

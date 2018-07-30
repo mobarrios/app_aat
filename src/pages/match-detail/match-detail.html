@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="aat">
-    <ion-title>Encuentro # 523423</ion-title>
+    <ion-title>Encuentro # {{encuentroId}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -142,6 +142,9 @@
                 </ion-col>
         </ion-row>
 
+        <button ion-button secondary full (click)="sendData()">
+            Enviar Datos
+        </button>
       </ion-grid>
 
 </ion-content>

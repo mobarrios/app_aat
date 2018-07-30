@@ -21,7 +21,8 @@ import { UsersService } from '../providers/users/users';
 import { IonicStorageModule } from '@ionic/storage';
 import { JugadoresPage } from '../pages/jugadores/jugadores';
 import { UtilsService } from '../providers/utils/utils';
-//import { SQLite } from '../../node_modules/@ionic-native/sqlite';
+import { DataBaseProvider } from '../providers/data-base/dataBase';
+import { SQLite } from '../../node_modules/@ionic-native/sqlite';
 
 
 
@@ -57,8 +58,8 @@ import { UtilsService } from '../providers/utils/utils';
     UsersService,
     EncuentrosService,
     UtilsService,
-    //DbService,
-   // SQLite,
+    DataBaseProvider,
+    SQLite,
   ]
 })
 export class AppModule {}

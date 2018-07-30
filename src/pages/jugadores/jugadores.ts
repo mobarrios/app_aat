@@ -4,6 +4,7 @@ import { EncuentrosService, Encuentro } from '../../providers/encuentros/encuent
 
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../../providers/utils/utils';
+import { DataBaseProvider } from '../../providers/data-base/dataBase';
 
 
 /**
@@ -46,7 +47,8 @@ export class JugadoresPage {
               public _es:EncuentrosService,
               public _utils:UtilsService,
               public storage:Storage,
-              public platform : Platform
+              public platform : Platform,
+              public _db:DataBaseProvider
             ){
 
       this.encuentroId = navParams.get('encuentrosId');
@@ -58,40 +60,82 @@ export class JugadoresPage {
    { 
     let data ;
 
-    if(this.platform.is('cordova'))
-      {
-        this.storage.get(this.encuentroId).then((val) => {
-           this.enc = val;
-        });
+    // local storage
+    // if(this.platform.is('cordova'))
+    //   {
+    //     this.storage.get(this.encuentroId).then((val) => {
+    //        this.enc = val;
+    //     });
 
-      }else{
-           this.enc = JSON.parse(localStorage.getItem(this.encuentroId));  
-      }
+    //   }else{
+    //        this.enc = JSON.parse(localStorage.getItem(this.encuentroId));  
+    //   }
 
 
-      if(this.enc)
-        {
-          this.singles1local = this.enc.jugadorLocalSingle1;
-          this.singles1visita = this.enc.jugadorVisitaSingle1;
-          this.singles2local = this.enc.jugadorLocalSingle2;
-          this.singles2visita = this.enc.jugadorVisitaSingle2;
-          this.dobleslocal1 = this.enc.jugadorLocal1Doble;
-          this.dobleslocal2 = this.enc.jugadorLocal2Doble;
-          this.doblesvisita1 = this.enc.jugadorVisita1Doble;
-          this.doblesvisita2 = this.enc.jugadorVisita2Doble;      
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores WHERE encuentro_id = ?',[this.encuentroId]).then(res=>{
+        for (let i = 0; i < res.rows.length; i++) {
+          let data = res.rows.item(i);
+          
+          if(data.lv == 'l' && data.partido == 'S1')
+              this.singles1local = data.jugador_id;
+
+          if(data.lv == 'v' && data.partido == 'S1')
+            this.singles1visita = data.jugador_id;
+
+          if(data.lv == 'l' && data.partido == 'S2')
+              this.singles2local = data.jugador_id;
+
+          if(data.lv == 'v' && data.partido == 'S2')
+            this.singles2visita = data.jugador_id;
+
+          //dobles
+          if(data.lv == 'l' && data.partido == 'D1')
+            this.dobleslocal1 = data.jugador_id;
+          
+          if(data.lv == 'l' && data.partido == 'D2')
+            this.dobleslocal2 = data.jugador_id;
+
+          if(data.lv == 'v' && data.partido == 'D1')
+            this.doblesvisita1 = data.jugador_id;
+          
+          if(data.lv == 'v' && data.partido == 'D2')
+            this.doblesvisita2 = data.jugador_id;
+
+              //console.log(res.rows.item(i).jugador_id);
+          
         }
+      });
+
+
+
+      // if(this.enc)
+      //   {
+      //     this.singles1local = this.enc.jugadorLocalSingle1;
+      //     this.singles1visita = this.enc.jugadorVisitaSingle1;
+      //     this.singles2local = this.enc.jugadorLocalSingle2;
+      //     this.singles2visita = this.enc.jugadorVisitaSingle2;
+      //     this.dobleslocal1 = this.enc.jugadorLocal1Doble;
+      //     this.dobleslocal2 = this.enc.jugadorLocal2Doble;
+      //     this.doblesvisita1 = this.enc.jugadorVisita1Doble;
+      //     this.doblesvisita2 = this.enc.jugadorVisita2Doble;      
+      //   }
   
 
 
 
      this._es.getEncuentro(this.encuentroId).subscribe(data => {
-       this.local = data['equipoLocal']['id'];
-       this.visita = data['equipoVisitante']['id'];
-       this.localNombre = data['equipoLocal']['club']['nombre'];
-       this.visitaNombre = data['equipoVisitante']['club']['nombre'];
-       this.getBfLocal();
-       this.getBfVisita();
+       this._utils.showMessages('Sincronizando Lista de Buena Fé..')
+        
+        this.local = data['equipoLocal']['id'];
+        this.visita = data['equipoVisitante']['id'];
+        this.localNombre = data['equipoLocal']['club']['nombre'];
+        this.visitaNombre = data['equipoVisitante']['club']['nombre'];
+        this.getBfLocal();
+        this.getBfVisita();
+        this._utils.dismissMessages();
       });
+
+
    }
 
    getBfLocal()
@@ -123,11 +167,11 @@ export class JugadoresPage {
       
 
 
-    //this._utils.showLoading('Guardando...');
+    this._utils.showLoading('Guardando...');
 
 
 
-    this.enc = {
+    let enc = {
       'id': this.encuentroId , 
       'jugadorLocalSingle1' : this.singles1local,
       'jugadorVisitaSingle1' : this.singles1visita,
@@ -147,9 +191,83 @@ export class JugadoresPage {
       }
 
 
-    //this._utils.showLoading('Datos Guardados');
-   }
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'S1' ]).then(res => {
+        
+        if(res.rows.length == 0 && this.singles1local != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'l','S1',this.singles1local]);
+        } 
+        //   else
+        // {
+        //   let sql1 = 'UPDATE encuentros SET jugador_id=? WHERE id=?';
+        //   this._db.db.executeSql(sql1, [ this.singles1local, 1]);
+        // }
+  
+      });     
 
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'S1' ]).then(res => {
+        if(res.rows.length == 0 && this.singles1visita != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'v','S1',this.singles1visita]);
+        } 
+      });   
+      
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'S2' ]).then(res => {
+        if(res.rows.length == 0 && this.singles2local != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'l','S2',this.singles2local]);
+        } 
+      });     
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'S2' ]).then(res => {
+        if(res.rows.length == 0  && this.singles2visita != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'v','S2',this.singles2visita]);
+        } 
+      });   
+
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D1' ]).then(res => {
+        if(res.rows.length == 0  && this.dobleslocal1 != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'l','D1',this.dobleslocal1]);
+        } 
+      });   
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D2' ]).then(res => {
+        if(res.rows.length == 0  && this.dobleslocal2 != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'l','D2',this.dobleslocal2]);
+        } 
+      });   
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'D1' ]).then(res => {
+        if(res.rows.length == 0  && this.doblesvisita1 != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'v','D1',this.doblesvisita1]);
+        } 
+      });   
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'D2' ]).then(res => {
+        if(res.rows.length == 0  && this.doblesvisita2 != null)
+        {
+          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+          this._db.db.executeSql(sql, [ this.encuentroId, 'v','D2',this.doblesvisita2]);
+        } 
+      });   
+
+
+      this.navCtrl.pop();
+
+   }
   }
 
 

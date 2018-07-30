@@ -67,6 +67,7 @@ export class LoginPage {
          localStorage.setItem('user', JSON.stringify(this._us.user));
         }
 
+      
         this._utilsService.dismissMessages();
         this.navCtrl.setRoot(HomePage);
 

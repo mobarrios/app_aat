@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { UsersService } from '../users/users';
 import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { DataBaseProvider } from '../data-base/dataBase';
 
 
 
@@ -22,7 +23,8 @@ export class EncuentrosService {
   constructor(public http: HttpClient,
               public _us:UsersService,
               public platform:Platform,
-              public storage:Storage
+              public storage:Storage,
+              public _db:DataBaseProvider,
              ) {
     }
 
@@ -75,13 +77,41 @@ export class EncuentrosService {
 
     return new Promise((resolve, reject)=> {
       this.http.get(url,httpOptions).subscribe(
-        res=>{resolve(res);
+        res=>{
+          this.storeEncuentros(res);
+          resolve(res);
       },
         (err)=>{reject(err);
       })
   });
 
     //return this.http.get(url, httpOptions);
+  }
+
+
+  getEncuentrosStore()
+  {
+    return this._db.db.executeSql('SELECT * FROM encuentros',[]).then(response => {
+      return Promise.resolve( response );
+    });
+  }
+
+  storeEncuentros(res)
+  {
+    console.log('GUARDA ENC');
+    for (let index = 0; index < res.length; index++) {
+            // console.log(res[index].id);
+            let data:any ;
+
+             this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ?',  [res[index].id]).then(r=>{
+      
+              if(r.rows.length == 0)
+              {
+                let sql = 'INSERT INTO encuentros(encuentro_id, local_id, visita_id,  campeonato,categoria,division, fecha) VALUES(?,?,?,?,?,?,?)';
+                this._db.db.executeSql(sql, [ res[index].id, res[index].equipoLocal.id ,res[index].equipoVisitante.id,res[index].campeonato.descripcion, res[index].categoria.descripcion, res[index].division.descripcion,res[index].fecha]);
+              } 
+            });             
+        }
   }
 
 
@@ -112,6 +142,62 @@ export class EncuentrosService {
   }
 
 
+  postEncuentrosResultados(data)
+  {
+    let httpOptions = {
+      headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer '+ this._us.getToken(),
+          'Access-Control-Allow-Origin':'*',
+        })
+    };
+    let url = this.url + '/resultado';
+  
+    // let body =  {
+    //               'encuentrosId':'417694',
+    //               'partidos':[
+    //                 {
+    //                   'tipo':'S1',
+    //                   "equipoIdLocal": 443,
+    //                   "equipoIdVisita": 24,
+    //                   'jugadorIdLocal1' : 1234,
+    //                   'jugadorIdVisita1' : 3232,
+    //                   'sets':'657282'
+    //                 },
+    //                 {
+    //                   'tipo':'S2',
+    //                   "equipoIdLocal": 443,
+    //                   "equipoIdVisita": 24,
+    //                   'jugadorIdLocal1' : 1234,
+    //                   'jugadorIdVisita1' : 3232,
+    //                   'sets':'657282'
+    //                 },
+    //                 {
+    //                   'tipo':'D',
+    //                   "equipoIdLocal": 443,
+    //                   "equipoIdVisita": 24,
+    //                   'jugadorIdLocal1' : 1234,
+    //                   'jugadorIdLocal2' : 1234,
+    //                   'jugadorIdVisita1' : 3232,
+    //                   'jugadorIdVisita' : 3232,
+    //                   'sets':'657282'
+    //                 }
+    //               ]
+
+    //             };
+
+
+    let body = data;
+
+    return new Promise((resolve, reject)=>
+    {
+      this.http.post(url, body, httpOptions).subscribe(
+        res=>{resolve(res);
+      },(err)=>{reject(err);})
+  });
+
+
+  }
 
 
 
