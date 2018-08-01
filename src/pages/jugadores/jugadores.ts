@@ -58,7 +58,6 @@ export class JugadoresPage {
 
    getData()
    { 
-    let data ;
 
     // local storage
     // if(this.platform.is('cordova'))
@@ -72,7 +71,8 @@ export class JugadoresPage {
     //   }
 
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores WHERE encuentro_id = ?',[this.encuentroId]).then(res=>{
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores WHERE encuentro_id = ?',[this.encuentroId]).then(res=>
+        {
         for (let i = 0; i < res.rows.length; i++) {
           let data = res.rows.item(i);
           
@@ -155,10 +155,6 @@ export class JugadoresPage {
    //envia data de jugadores
    sendPlayers(){
 
-    let s1 = {};
-    let s2 = {};
-    let d1 = {};
-
     if(this.singles1local == this.singles2local)
       this._utils.showMessages('Alerta','El Jugador del Equipo Local, Single 1, no puede ser el mismo que el Single2',true);
      
@@ -169,19 +165,17 @@ export class JugadoresPage {
 
     this._utils.showLoading('Guardando...');
 
-
-
-    let enc = {
-      'id': this.encuentroId , 
-      'jugadorLocalSingle1' : this.singles1local,
-      'jugadorVisitaSingle1' : this.singles1visita,
-      'jugadorLocalSingle2' : this.singles2local,
-      'jugadorVisitaSingle2' : this.singles2visita,
-      'jugadorLocal1Doble' : this.dobleslocal1,
-      'jugadorLocal2Doble' : this.dobleslocal2,
-      'jugadorVisita1Doble' : this.doblesvisita1,
-      'jugadorVisita2Doble' : this.doblesvisita2,      
-    };
+    // let enc = {
+    //   'id': this.encuentroId , 
+    //   'jugadorLocalSingle1' : this.singles1local,
+    //   'jugadorVisitaSingle1' : this.singles1visita,
+    //   'jugadorLocalSingle2' : this.singles2local,
+    //   'jugadorVisitaSingle2' : this.singles2visita,
+    //   'jugadorLocal1Doble' : this.dobleslocal1,
+    //   'jugadorLocal2Doble' : this.dobleslocal2,
+    //   'jugadorVisita1Doble' : this.doblesvisita1,
+    //   'jugadorVisita2Doble' : this.doblesvisita2,      
+    // };
 
       if(this.platform.is('cordova'))
       {
@@ -231,7 +225,6 @@ export class JugadoresPage {
         } 
       });   
 
-
       this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D1' ]).then(res => {
         if(res.rows.length == 0  && this.dobleslocal1 != null)
         {
@@ -264,6 +257,14 @@ export class JugadoresPage {
         } 
       });   
 
+
+      // this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ?', [this.encuentroId]).then(res => {
+        
+      //   for (let i = 0; i < res.rows.length; i++) {
+      //     this._es.getJugadoresData(res.rows.item(i).jugador_id,);
+      //   }
+
+      // });
 
       this.navCtrl.pop();
 

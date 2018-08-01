@@ -21,11 +21,22 @@ import { DataBaseProvider } from '../../providers/data-base/dataBase';
 export class ResultadoPage {
 
   public localNombre:any;
+  public localId:any;
   public visitaNombre:any;
+  public visitaId:any;
   public encuentroId:any ;
 
   public enc:Encuentro;
 
+  public ls1_j1;
+  public vs1_j1;
+  public ls2_j1;
+  public vs2_j1;
+  public ld1_j1;
+  public ld1_j2;
+  public vd1_j1;
+  public vd1_j2;
+  
   public ls1_1:any = 0;
   public ls1_2:any = 0;
   public ls1_3:any = 0;
@@ -78,32 +89,32 @@ export class ResultadoPage {
 
 
 
-    let data:any = [{
-      'id': this.encuentroId , 
-        'ls1_1':this.ls1_1,
-        'ls1_2':this.ls1_2,
-        'ls1_3':this.ls1_3,
+    // let data:any = [{
+    //   'id': this.encuentroId , 
+    //     'ls1_1':this.ls1_1,
+    //     'ls1_2':this.ls1_2,
+    //     'ls1_3':this.ls1_3,
 
-        'vs1_1':this.vs1_1,
-        'vs1_2':this.vs1_2,
-        'vs1_3':this.vs1_3,
+    //     'vs1_1':this.vs1_1,
+    //     'vs1_2':this.vs1_2,
+    //     'vs1_3':this.vs1_3,
 
-        'ls2_1':this.ls2_1,
-        'ls2_2':this.ls2_2,
-        'ls2_3':this.ls2_3,
+    //     'ls2_1':this.ls2_1,
+    //     'ls2_2':this.ls2_2,
+    //     'ls2_3':this.ls2_3,
 
-        'vs2_1':this.vs2_1,
-        'vs2_2':this.vs2_2,
-        'vs2_3':this.vs2_3,
+    //     'vs2_1':this.vs2_1,
+    //     'vs2_2':this.vs2_2,
+    //     'vs2_3':this.vs2_3,
 
-        'ld_1':this.ld_1,
-        'ld_2':this.ld_2,
-        'ld_3':this.ld_3,
+    //     'ld_1':this.ld_1,
+    //     'ld_2':this.ld_2,
+    //     'ld_3':this.ld_3,
 
-        'vd_1':this.vd_1,
-        'vd_2':this.vd_2,
-        'vd_3':this.vd_3,
-    }];
+    //     'vd_1':this.vd_1,
+    //     'vd_2':this.vd_2,
+    //     'vd_3':this.vd_3,
+    // }];
 
     // if(this.platform.is('cordova'))
     //   {
@@ -218,11 +229,20 @@ export class ResultadoPage {
 
   getData()
    { 
-      let data ;
-       this._es.getEncuentro(this.encuentroId).subscribe(data => {
-       this.localNombre   = data['equipoLocal']['club']['nombre'];
-       this.visitaNombre  = data['equipoVisitante']['club']['nombre'];
-      
+    //    this._es.getEncuentro(this.encuentroId).subscribe(res => {
+    //        console.table(res);
+    //    this.localNombre   = 'dposkdpoaskpo' + res['equipoLocal']['club']['nombre'];
+    //    this.visitaNombre  = res['equipoVisitante']['club']['nombre'];
+    //    this.localId       = res['equipoLocal']['club']['id'];
+    //    this.visitaId      = res['equipoVisitante']['club']['id'];
+    //   });
+
+      this._es.getEncuntroStore(this.encuentroId).then(res => {
+        let data = res.rows.item(0);
+        this.localNombre = data.club_local_nombre;
+        this.visitaNombre = data.club_visita_nombre;
+        this.localId = data.club_local_id;
+        this.visitaId = data.club_visita_id;
       });
 
 
@@ -273,11 +293,47 @@ export class ResultadoPage {
           if(data.lv == 'v' && data.partido == 'D1' && data.n_set == '3')
               this.vd_3 = data.puntos;
 
-  
-
               //console.log(res.rows.item(i).jugador_id);
         }
       });
+
+
+      this._db.db.executeSql('SELECT * FROM encuentros_jugadores WHERE encuentro_id = ?',[this.encuentroId]).then(res=>{
+        
+        for (let i = 0; i < res.rows.length; i++) 
+        {
+          let data = res.rows.item(i);
+
+          if(data.lv == 'l')
+                 this._es.getJugadoresData( data.jugador_id , this.localId).then(res => {
+                 this._db.db.executeSql('UPDATE encuentros_jugadores SET jugador_nombre=? WHERE id=?', [res['nombre'], data.id]);
+                 if(data.partido == 'S1')
+                        this.ls1_j1 = res['nombre'];
+                 if(data.partido == 'S2')
+                        this.ls2_j1 = res['nombre'];
+                 if(data.partido == 'D1')
+                        this.ld1_j1 = res['nombre'];
+                 if(data.partido == 'D2')
+                        this.ld1_j2 = res['nombre'];
+                });
+
+            if(data.lv == 'v')
+                this._es.getJugadoresData( data.jugador_id , this.visitaId).then(res => {
+                this._db.db.executeSql('UPDATE encuentros_jugadores SET jugador_nombre=? WHERE id=?', [res['nombre'], data.id]);
+                if(data.partido == 'S1')
+                        this.vs1_j1 = res['nombre'];
+                 if(data.partido == 'S2')
+                        this.vs2_j1 = res['nombre'];
+                 if(data.partido == 'D1')
+                        this.vd1_j1 = res['nombre'];
+                 if(data.partido == 'D2')
+                        this.vd1_j2 = res['nombre'];
+            });
+          
+        }
+      });
+
+
 
 
     this.enc = this._es.getEncuentrosLocalData(this.encuentroId);

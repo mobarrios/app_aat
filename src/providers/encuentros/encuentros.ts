@@ -4,9 +4,7 @@ import { UsersService } from '../users/users';
 import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { DataBaseProvider } from '../data-base/dataBase';
-
-
-
+import { UtilsService } from '../utils/utils';
 
 /*
   Generated class for the EncuentrosProvider provider.
@@ -25,6 +23,7 @@ export class EncuentrosService {
               public platform:Platform,
               public storage:Storage,
               public _db:DataBaseProvider,
+              public _utils:UtilsService,
              ) {
     }
 
@@ -91,24 +90,44 @@ export class EncuentrosService {
 
   getEncuentrosStore()
   {
-    return this._db.db.executeSql('SELECT * FROM encuentros',[]).then(response => {
+    let user = this._us.user.id;
+
+    return this._db.db.executeSql('SELECT * FROM encuentros where user_id = ?',[user]).then(response => {
       return Promise.resolve( response );
     });
   }
 
+  getEncuntroStore(id:any)
+  {
+    return this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ?',[id]).then(response => {
+      return Promise.resolve( response );
+    });
+
+  }
+
   storeEncuentros(res)
   {
-    console.log('GUARDA ENC');
+    let user = this._us.user.id;
+
+
     for (let index = 0; index < res.length; index++) {
             // console.log(res[index].id);
-            let data:any ;
 
              this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ?',  [res[index].id]).then(r=>{
       
               if(r.rows.length == 0)
               {
-                let sql = 'INSERT INTO encuentros(encuentro_id, local_id, visita_id,  campeonato,categoria,division, fecha) VALUES(?,?,?,?,?,?,?)';
-                this._db.db.executeSql(sql, [ res[index].id, res[index].equipoLocal.id ,res[index].equipoVisitante.id,res[index].campeonato.descripcion, res[index].categoria.descripcion, res[index].division.descripcion,res[index].fecha]);
+                let sql = 'INSERT INTO encuentros(user_id ,encuentro_id, club_local_id, club_local_nombre, club_visita_id, club_visita_nombre, campeonato,categoria,division, fecha) VALUES(?,?,?,?,?,?,?,?,?,?)';
+                this._db.db.executeSql(sql, [ 
+                  user,
+                  res[index].id, 
+                  res[index].equipoLocal.club.id ,
+                  res[index].equipoLocal.club.nombre ,
+                  res[index].equipoVisitante.club.id,
+                  res[index].equipoVisitante.club.nombre ,
+                  res[index].campeonato.descripcion, 
+                  res[index].categoria.descripcion, res[index].division.descripcion,
+                  res[index].fecha]);
               } 
             });             
         }
@@ -187,12 +206,13 @@ export class EncuentrosService {
     //             };
 
 
-    let body = data;
+    let body = {data};
 
     return new Promise((resolve, reject)=>
     {
       this.http.post(url, body, httpOptions).subscribe(
-        res=>{resolve(res);
+        res=>{
+         this._utils.showMessages('N Confirmación : ' , res['confirmacionesResultado'] ,true);
       },(err)=>{reject(err);})
   });
 
@@ -223,6 +243,28 @@ export class EncuentrosService {
 
   // Enceuntros
   
+
+  getJugadoresData(jugadorId:any ,clubId:any)
+  {
+    let httpOptions = {
+      headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer '+ this._us.getToken(),
+          'Access-Control-Allow-Origin':'*',
+        })
+    };
+    let url = this.url + '/club/'+ clubId +'/jugador/'+ jugadorId;
+   
+    return new Promise((resolve, reject)=>
+    {
+      this.http.get(url, httpOptions).subscribe
+      ( res=>{
+        resolve(res);
+      }, (err)=>{
+        reject(err);})
+    });
+
+  }
 }
 export interface Encuentro { 
      id: string;

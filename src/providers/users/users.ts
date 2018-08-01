@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { DataBaseProvider } from '../data-base/dataBase';
-import { SQLite } from '../../../node_modules/@ionic-native/sqlite';
 
 
 /*
@@ -27,6 +26,7 @@ export class UsersService {
     'token' : '',
     'club' : '',
     'expiration' : '',
+    'id' : '',
   };
 
   public httpOptions = 
@@ -44,8 +44,6 @@ export class UsersService {
               public storage:Storage, 
               public platform:Platform,
               public _db:DataBaseProvider) {
-
-
               }
 
 
@@ -65,7 +63,6 @@ export class UsersService {
 
     //testing
     this.body =  {'email':'leandro.antonelli2@gmail.com' , 'password':'Aa123456!'};
-
     //this.body =  {'email':user, 'password':pass};
 
     let url = this.url + "/Account/Login"; 
@@ -141,8 +138,8 @@ export class UsersService {
     let sql = 'DELETE from users';
     this._db.db.executeSql(sql);
 
-    let sql1 = 'DELETE from encuentros';
-    this._db.db.executeSql(sql1);
+    // let sql1 = 'DELETE from encuentros';
+    // this._db.db.executeSql(sql1);
   }
 
   getUserData()
@@ -181,8 +178,8 @@ export class UsersService {
   //save user in db
   storeUser(res)
   {
-    let sql = 'INSERT INTO users(token, club, expiration, username) VALUES(?,?,?,?)';
-    return this._db.db.executeSql( sql ,[res.token,res.club.nombre,res.expiration]);
+    let sql = 'INSERT INTO users(user_id , token, club, expiration, username) VALUES(?,?,?,?,?)';
+    return this._db.db.executeSql( sql ,[res.id ,res.token, res.club.nombre, res.expiration]);
   }
   
 }

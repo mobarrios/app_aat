@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 
@@ -64,17 +63,17 @@ export class DataBaseProvider {
   }
 
   createTableUsers(){
-    let sql = 'CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, club TEXT, expiration DATE ,username TEXT)';
+    let sql = 'CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT ,token TEXT, club TEXT, expiration DATE ,username TEXT)';
     return this.db.executeSql(sql, []);
   }
 
   createTableEncuentros(){
-    let sql = 'CREATE TABLE IF NOT EXISTS encuentros(id INTEGER PRIMARY KEY AUTOINCREMENT, encuentro_id INTEGER, local_id INTEGER, visita_id INTEGER, campeonato TEXT, categoria TEXT, division TEXT , fecha DATE)';
+    let sql = 'CREATE TABLE IF NOT EXISTS encuentros(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, encuentro_id INTEGER, club_local_id INTEGER, club_local_nombre TEXT , club_visita_id INTEGER, club_visita_nombre TEXT, campeonato TEXT, categoria TEXT, division TEXT , fecha DATE)';
     return this.db.executeSql(sql, []);
   }
 
   createTableEncuentrosJugadores(){
-    let sql = 'CREATE TABLE IF NOT EXISTS encuentros_jugadores(id INTEGER PRIMARY KEY AUTOINCREMENT, encuentro_id INTEGER, lv TEXT , partido TEXT, jugador_id INTEGER)';
+    let sql = 'CREATE TABLE IF NOT EXISTS encuentros_jugadores(id INTEGER PRIMARY KEY AUTOINCREMENT, encuentro_id INTEGER, lv TEXT , partido TEXT, jugador_id INTEGER, jugador_nombre TEXT)';
     return this.db.executeSql(sql, []);
   }
 

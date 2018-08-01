@@ -20,20 +20,30 @@
           <ion-col col-6>
               <ion-card>
                   <ion-card-header text-center>
-                     <strong ion-text  color="secondary">Mi Equipo</strong>
+                     <strong ion-text  color="secondary">{{local_nombre}}</strong>
+                     <p>#{{local_id}}</p>
                   </ion-card-header>
                   <ion-card-content>
                     <p>Capitán</p><strong>Nicolas Monja</strong>
+                            <ion-item>
+                                <ion-label>Confirmar</ion-label>
+                                <ion-checkbox color="dark" checked="false"></ion-checkbox>
+                            </ion-item>
                   </ion-card-content>
                 </ion-card>
           </ion-col>
           <ion-col col-6 ter>
               <ion-card>
                   <ion-card-header text-center>
-                     <strong ion-text color="danger">Racing</strong>
+                     <strong ion-text color="danger">{{visita_nombre}}</strong>
+                     <p>#{{visita_id}}</p>
                   </ion-card-header>
                   <ion-card-content>
                       <p>Capitán</p><strong>Dodo Leandro</strong>
+                      <ion-item>
+                            <ion-label>Confirmar</ion-label>
+                            <ion-checkbox color="dark" checked="false"></ion-checkbox>
+                        </ion-item>
                     </ion-card-content>
                 </ion-card>
           </ion-col>
@@ -42,9 +52,7 @@
             <ion-col col-12>
               <ion-card>
                   <ion-card-content>
-                      <p>Fecha</p><strong>23/06/18</strong>
-                      <p>Hora</p><strong>16:30</strong>
-                      <p>Sede</p><strong>Cancha 1</strong>
+                      <p>Fecha</p><strong>{{fecha}}</strong>
                   </ion-card-content>
               </ion-card>
             </ion-col>
@@ -58,23 +66,13 @@
                    </ion-card-header>
                   <ion-card-content>
                     <ion-row>
-                      <ion-col col-6></ion-col>
-                      <ion-col>Set 1</ion-col>
-                      <ion-col>Set 2</ion-col>
-                      <ion-col>Set 3</ion-col>
+                        <ion-col col-6 text-center><strong>{{s1_loc_jug_n}}</strong></ion-col>
+                        <ion-col col-6 text-center><strong>{{s1_vis_jug_n}}</strong></ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col  col-6>Jugador 1</ion-col>
-                        <ion-col>6</ion-col>
-                        <ion-col>0</ion-col>
-                        <ion-col>6</ion-col>
+                        <ion-col col-6 text-center> <ion-badge >{{s1_l_t_sets}}</ion-badge></ion-col>
+                        <ion-col col-6 text-center> <ion-badge >{{s1_v_t_sets}}</ion-badge></ion-col>
                       </ion-row>
-                      <ion-row>
-                          <ion-col  col-6>Jugador 2</ion-col>
-                          <ion-col>4</ion-col>
-                          <ion-col>6</ion-col>
-                          <ion-col>5</ion-col>
-                        </ion-row>
                   </ion-card-content>
               </ion-card>
             </ion-col>
@@ -85,22 +83,12 @@
                      </ion-card-header>
                     <ion-card-content>
                         <ion-row>
-                            <ion-col col-6></ion-col>
-                            <ion-col>Set 1</ion-col>
-                            <ion-col>Set 2</ion-col>
-                            <ion-col>Set 3</ion-col>
+                                <ion-col col-6 text-center><strong>{{s2_loc_jug_n}}</strong></ion-col>
+                                <ion-col col-6 text-center><strong>{{s2_vis_jug_n}}</strong></ion-col>
                           </ion-row>
                           <ion-row>
-                              <ion-col  col-6>Jugador 5</ion-col>
-                              <ion-col>6</ion-col>
-                              <ion-col>0</ion-col>
-                              <ion-col>6</ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col  col-6>Jugador 6</ion-col>
-                                <ion-col>4</ion-col>
-                                <ion-col>6</ion-col>
-                                <ion-col>5</ion-col>
+                                <ion-col col-6 text-center><ion-badge >{{s2_l_t_sets}}</ion-badge></ion-col>
+                                <ion-col col-6 text-center><ion-badge >{{s2_v_t_sets}}</ion-badge></ion-col>
                               </ion-row>
                     </ion-card-content>
                 </ion-card>
@@ -111,35 +99,24 @@
                           <strong ion-text  color="aat">Dobles 1</strong>
                        </ion-card-header>
                       <ion-card-content>
-
-                          <ion-row>
-                              <ion-col col-6></ion-col>
-                              <ion-col>Set 1</ion-col>
-                              <ion-col>Set 2</ion-col>
-                              <ion-col>Set 3</ion-col>
+                            <ion-row>
+                                <ion-col col-6 text-center>
+                                    <strong>{{d1_loc_jug_1_n}}</strong><br>
+                                    <strong>{{d1_loc_jug_2_n}}</strong>
+                                </ion-col>
+                                <ion-col col-6 text-center>
+                                    <strong>{{d1_vis_jug_1_n}}</strong><br>
+                                    <strong>{{d1_vis_jug_2_n}}</strong>
+                                </ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-col  col-6>
-                                  Jugador 5 <br>
-                                  Jugador 1
-                                </ion-col>
-                                <ion-col>6</ion-col>
-                                <ion-col>0</ion-col>
-                                <ion-col>6</ion-col>
-                              </ion-row>
-                              <ion-row>
-                                  <ion-col  col-6>
-                                    Jugador 6 <br>
-                                    Jugador 3
-                                  </ion-col>
-                                  <ion-col>4</ion-col>
-                                  <ion-col>6</ion-col>
-                                  <ion-col>5</ion-col>
-                                </ion-row>
-                        
+                                <ion-col col-6 text-center><ion-badge >{{d1_l_t_sets}}</ion-badge></ion-col>
+                                <ion-col col-6 text-center><ion-badge >{{d1_v_t_sets}}</ion-badge></ion-col>
+                            </ion-row>
                       </ion-card-content>
                   </ion-card>
                 </ion-col>
+                
         </ion-row>
 
         <button ion-button secondary full (click)="sendData()">

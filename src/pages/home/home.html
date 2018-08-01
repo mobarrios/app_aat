@@ -32,7 +32,7 @@
         </ion-refresher>
       
 
-            <h3 text-center ><small>CLUB : </small>{{club.nombre}}</h3>
+            <h3 text-center ><small>#{{club.id}} : </small>{{club.nombre}}</h3>
 
     <hr>
       <ion-list>
@@ -41,9 +41,12 @@
               <button ion-button (click)="goTomatchDetail(enc.encuentro_id)"><ion-icon name="ios-information-circle-outline"></ion-icon>Detalle</button>
           </ion-item-options>
           <ion-item>
-              <h3>{{enc.encuentro_id}}</h3>
+              <p># {{enc.encuentro_id}}</p>
+              <strong>{{enc.club_local_id}} -
+              {{enc.club_visita_id}}</strong>
               <h3>{{enc.campeonato}}</h3> 
               <h3>{{enc.division}}</h3> 
+              <p>{{enc.categoria}}</p>
               <ion-note item-end>
               <p>{{enc.fecha}} </p>
               </ion-note>
