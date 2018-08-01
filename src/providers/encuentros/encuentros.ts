@@ -211,8 +211,7 @@ export class EncuentrosService {
     return new Promise((resolve, reject)=>
     {
       this.http.post(url, body, httpOptions).subscribe(
-        res=>{
-         this._utils.showMessages('N Confirmación : ' , res['confirmacionesResultado'] ,true);
+        res =>{ resolve(res);
       },(err)=>{reject(err);})
   });
 
@@ -221,7 +220,7 @@ export class EncuentrosService {
 
 
 
-    //buena fe
+  //buena fe
 
   // getBuenaFe(id:number){
     

@@ -20,13 +20,14 @@
          Singles 1
         </ion-card-header>
         <ion-card-content >
-            <ion-item>
+              <ion-item>
                 <ion-label> {{localNombre}}</ion-label>
                 <ion-select [(ngModel)]="singles1local" >
                   <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}"> {{player.jugador.numeroDocumento}} {{player.jugador.nombre}}
                   </ion-option>
                 </ion-select>
               </ion-item>
+              <button ion-button clear>+</button>
 
               <ion-item>
                   <ion-label>{{visitaNombre}} </ion-label>
@@ -34,7 +35,8 @@
                     <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
                   </ion-select>
                 </ion-item>
-        </ion-card-content>    
+                <button ion-button clear>+</button>
+            </ion-card-content>    
     </ion-card>
 
     <ion-card>

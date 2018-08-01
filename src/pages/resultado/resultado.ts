@@ -61,6 +61,7 @@ export class ResultadoPage {
   public vd_2:any = 0;
   public vd_3:any = 0;
 
+  public incidencias = 1 ;
 
 
   constructor(
@@ -78,7 +79,7 @@ export class ResultadoPage {
 
   }
 
-  sendPlayers()
+  sendResultados()
   {
    
     // this._es.postEncuentrosResultados().then(result=>{
@@ -222,7 +223,10 @@ export class ResultadoPage {
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','D1','3', this.vd_3]);
     });  
 
-      
+    this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ?',[this.encuentroId]).then(res =>{
+           this._db.db.executeSql('UPDATE encuentros SET incidencias = ? WHERE encuentro_id = ?', [this.incidencias, this.encuentroId]);
+      });  
+
     this._us.showLoading('Guardando Datos');
     this.navCtrl.pop();
   }
@@ -243,6 +247,7 @@ export class ResultadoPage {
         this.visitaNombre = data.club_visita_nombre;
         this.localId = data.club_local_id;
         this.visitaId = data.club_visita_id;
+        this.incidencias = data.incidencias;
       });
 
 

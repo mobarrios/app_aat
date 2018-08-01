@@ -113,8 +113,27 @@
   </ion-col>
     
 
+  <ion-col col-12>
+      <ion-card>
+          <ion-card-header text-center>
+              <strong ion-text >Incidencias</strong>
+           </ion-card-header>
+          <ion-card-content>
+              <ion-item>
+                  <ion-label>Incidencias</ion-label>
+                  <ion-select [(ngModel)]="incidencias">
+                      <ion-option value="1">Ganador</ion-option>
+                      <ion-option value="3">WO</ion-option>
+                      <ion-option value="7">Reprogramar</ion-option>
+                  </ion-select>
+              </ion-item>
+          </ion-card-content>
+      </ion-card>
+  </ion-col>
+  
+
     
-    <button ion-button secondary full (click)="sendPlayers()">
+    <button ion-button secondary full (click)="sendResultados()">
         Guardar
     </button>
 

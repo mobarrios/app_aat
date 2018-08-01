@@ -24,6 +24,7 @@ export class MatchDetailPage {
   public local_nombre;
   public visita_nombre;
   public fecha; 
+  public incidencias;
 
   public s1_loc_jug;
   public s1_loc_jug_n;
@@ -57,6 +58,7 @@ export class MatchDetailPage {
   public d1_l_t_sets = 0;
   public d1_v_t_sets = 0;
 
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
                public _db:DataBaseProvider,
@@ -79,6 +81,7 @@ export class MatchDetailPage {
              this.local_nombre = data.club_local_nombre;
              this.visita_nombre = data.club_visita_nombre;
              this.fecha = data.fecha;
+             this.incidencias = data.incidencias;
        }
      });
 
@@ -272,6 +275,7 @@ export class MatchDetailPage {
           'jugadorIdLocal1' : this.s1_loc_jug,
           'jugadorIdVisita1' : this.s1_vis_jug,
           'sets': this.s1_sets,
+          "incidente": this.incidencias
         },
         {
           'tipo':'S2',
@@ -280,6 +284,7 @@ export class MatchDetailPage {
           'jugadorIdLocal1' : this.s2_loc_jug,
           'jugadorIdVisita1' : this.s2_vis_jug,
           'sets':this.s2_sets,
+          "incidente": this.incidencias
         },
         {
           'tipo':'D1',
@@ -289,18 +294,24 @@ export class MatchDetailPage {
           'jugadorIdLocal2' : this.d1_loc_jug_2,
           'jugadorIdVisita1' : this.d1_vis_jug_1,
           'jugadorIdVisita' : this.d1_vis_jug_2,
-          'sets': this.d1_sets
+          'sets': this.d1_sets,
+          "incidente": this.incidencias
         }
       ]
     };
 
      this._es.postEncuentrosResultados(data).then(res=>{
-       console.log(res);
+       console.log(res['id']);
        // this.navCtrl.pop();
      },(err)=>{
        console.log(err);
      });
     
+  }
+
+  sendConfirmacion()
+  {
+
   }
 
   
