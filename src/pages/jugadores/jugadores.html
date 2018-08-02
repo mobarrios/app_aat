@@ -17,25 +17,37 @@
 
     <ion-card>
         <ion-card-header text-center>
-         Singles 1
+         Singles 1 
         </ion-card-header>
         <ion-card-content >
               <ion-item>
                 <ion-label> {{localNombre}}</ion-label>
-                <ion-select [(ngModel)]="singles1local" >
+                <!-- <ion-select [(ngModel)]="singles1local" >
                   <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}"> {{player.jugador.numeroDocumento}} {{player.jugador.nombre}}
                   </ion-option>
-                </ion-select>
-              </ion-item>
-              <button ion-button clear>+</button>
+                </ion-select> -->
+                <button ion-button outline item-end icon-start (click)="agregarJugador('l','S1',local)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
+                </ion-item>
+                <ion-item>
+                    <p>{{singles1local}}</p>
+                </ion-item>
 
               <ion-item>
                   <ion-label>{{visitaNombre}} </ion-label>
-                  <ion-select [(ngModel)]="singles1visita" >
+                  <!-- <ion-select [(ngModel)]="singles1visita" >
                     <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                  </ion-select>
+                  </ion-select> -->
+                <button ion-button outline item-end icon-start (click)="agregarJugador('v','S1',visita)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
                 </ion-item>
-                <button ion-button clear>+</button>
+                <ion-item>
+                        <p>{{singles1visita}}</p>
+                </ion-item>
             </ion-card-content>    
     </ion-card>
 
@@ -46,16 +58,29 @@
         <ion-card-content>
             <ion-item>
                 <ion-label>{{localNombre}}</ion-label>
-                <ion-select [(ngModel)]="singles2local">
+                <!-- <ion-select [(ngModel)]="singles2local">
                     <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                </ion-select>
+                </ion-select> -->
+                <button ion-button outline item-end icon-start (click)="agregarJugador('l','S2',local)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
               </ion-item>
-
+              <ion-item>
+                    <p>{{singles2local}}</p>
+            </ion-item>
               <ion-item>
                   <ion-label>{{visitaNombre}}</ion-label>
-                  <ion-select [(ngModel)]="singles2visita">
+                  <!-- <ion-select [(ngModel)]="singles2visita">
                       <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                  </ion-select>
+                  </ion-select> -->
+                  <button ion-button outline item-end icon-start (click)="agregarJugador('v','S2',visita)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
+                </ion-item>
+                <ion-item>
+                        <p>{{singles2visita}}</p>
                 </ion-item>
         </ion-card-content>    
     </ion-card>
@@ -67,30 +92,56 @@
         <ion-card-content>
             <ion-item>
                 <ion-label>{{localNombre}}</ion-label>
-                <ion-select [(ngModel)]="dobleslocal1">
+                <!-- <ion-select [(ngModel)]="dobleslocal1">
                     <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                </ion-select>
+                </ion-select> -->
+                <button ion-button outline item-end icon-start (click)="agregarJugador('l','D1',local)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
               </ion-item>
-            
+              <ion-item>
+                    <p>{{dobleslocal1}}</p>
+            </ion-item>
               <ion-item>
                   <ion-label>{{localNombre}}</ion-label>
-                  <ion-select [(ngModel)]="dobleslocal2">
+                  <!-- <ion-select [(ngModel)]="dobleslocal2">
                       <ion-option *ngFor="let player of bfLocal "  value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                  </ion-select>
+                  </ion-select> -->
+                  <button ion-button outline item-end icon-start (click)="agregarJugador('l','D2',local)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
                 </ion-item>
-
+                <ion-item>
+                        <p>{{dobleslocal2}}</p>
+                </ion-item>
               <ion-item>
                   <ion-label>{{visitaNombre}}</ion-label>
-                  <ion-select [(ngModel)]="doblesvisita1">
+                  <!-- <ion-select [(ngModel)]="doblesvisita1">
                       <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                  </ion-select>
+                  </ion-select> -->
+                  <button ion-button outline item-end icon-start (click)="agregarJugador('v','D1',visita)">
+                        <ion-icon name="person"></ion-icon>
+                        Agregar
+                      </button>
+                </ion-item>
+                <ion-item>
+                        <p>{{doblesvisita1}}</p>
                 </ion-item>
                 <ion-item>
                     <ion-label>{{visitaNombre}}</ion-label>
-                    <ion-select [(ngModel)]="doblesvisita2">
+                    <!-- <ion-select [(ngModel)]="doblesvisita2">
                         <ion-option  *ngFor="let player of bfVisita" value="{{player.jugador.id}}">{{player.jugador.numeroDocumento}} {{player.jugador.nombre}}</ion-option>
-                    </ion-select>
+                    </ion-select> -->
+                    <button ion-button outline item-end icon-start (click)="agregarJugador('v','D2',visita)">
+                            <ion-icon name="person"></ion-icon>
+                            Agregar
+                          </button>
                   </ion-item>
+                  <ion-item>
+                        <p>{{doblesvisita2}}</p>
+                </ion-item>
         </ion-card-content>
     </ion-card>
 

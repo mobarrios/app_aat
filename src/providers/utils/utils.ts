@@ -19,7 +19,8 @@ export class UtilsService {
 
   constructor(public http: HttpClient,
               public alertCtrl: AlertController,
-              public loadingCtrl: LoadingController) { }
+              public loadingCtrl: LoadingController,
+              ) { }
 
 
   //menssages

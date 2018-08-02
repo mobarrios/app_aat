@@ -59,7 +59,8 @@ export class EncuentrosService {
           'Access-Control-Allow-Origin':'*',
         })
     };
-    let url = this.url + '/equipo/'+ equipoId +'/listabuenafe';
+    console.log(equipoId);
+    let url = this.url + '/equipo/'+equipoId+'/listabuenafe';
     return this.http.get(url, httpOptions); 
   }
 

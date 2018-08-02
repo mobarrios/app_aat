@@ -73,12 +73,12 @@ export class DataBaseProvider {
   }
 
   createTableEncuentrosJugadores(){
-    let sql = 'CREATE TABLE IF NOT EXISTS encuentros_jugadores(id INTEGER PRIMARY KEY AUTOINCREMENT, encuentro_id INTEGER, lv TEXT , partido TEXT, jugador_id INTEGER, jugador_nombre TEXT)';
+    let sql = 'CREATE TABLE IF NOT EXISTS encuentros_jugadores(id INTEGER PRIMARY KEY AUTOINCREMENT, encuentro_id INTEGER, lv TEXT , partido TEXT, jugador_id INTEGER, jugador_nombre TEXT, jugador_id_store INTEGER)';
     return this.db.executeSql(sql, []);
   }
 
   createTableJugadores(){
-    let sql = 'CREATE TABLE IF NOT EXISTS jugadores(id INTEGER PRIMARY KEY AUTOINCREMENT, id_jugador INTEGER, dni INTEGER, nombre TEXT, apellido TEXT)';
+    let sql = 'CREATE TABLE IF NOT EXISTS jugadores(id INTEGER PRIMARY KEY AUTOINCREMENT, id_jugador INTEGER, dni INTEGER, nombre TEXT)';
     return this.db.executeSql(sql, []);
   }
 

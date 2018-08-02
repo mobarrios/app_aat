@@ -1,0 +1,37 @@
+<!--
+  Generated template for the NuevoJugadorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title center >Agregar Jugador</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+          <ion-item>
+              <ion-label fixed>DNI</ion-label>
+              <ion-input [(ngModel)]="dni" type="text" value=""></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label fixed>Apellido , Nombre</ion-label>
+              <ion-input [(ngModel)]="nombre" type="text" value=""></ion-input>
+          </ion-item>
+    
+     
+         <button ion-item *ngFor="let player of bf " (click)="add(player.jugador.id, player.jugador.numeroDocumento, player.jugador.nombre)">
+            {{player.jugador.numeroDocumento}}, <strong>{{player.jugador.nombre}}</strong>
+          </button>  
+      </ion-list>
+
+
+  <button ion-button (click)="cerrar()">Cerrar</button>
+  <button ion-button color="secondary" (click)="guardar()">Guardar</button>
+
+</ion-content>

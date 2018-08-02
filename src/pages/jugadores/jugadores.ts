@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { EncuentrosService, Encuentro } from '../../providers/encuentros/encuentros';
 
 import { Storage } from '@ionic/storage';
 import { UtilsService } from '../../providers/utils/utils';
 import { DataBaseProvider } from '../../providers/data-base/dataBase';
+import { NuevoJugadorPage } from '../nuevo-jugador/nuevo-jugador';
 
 
 /**
@@ -48,12 +49,14 @@ export class JugadoresPage {
               public _utils:UtilsService,
               public storage:Storage,
               public platform : Platform,
-              public _db:DataBaseProvider
+              public _db:DataBaseProvider,
+              public modalCt:ModalController,
             ){
 
       this.encuentroId = navParams.get('encuentrosId');
       this.getData();
    }
+
 
 
    getData()
@@ -77,29 +80,29 @@ export class JugadoresPage {
           let data = res.rows.item(i);
           
           if(data.lv == 'l' && data.partido == 'S1')
-              this.singles1local = data.jugador_id;
+              this.singles1local = data.jugador_nombre;
 
           if(data.lv == 'v' && data.partido == 'S1')
-            this.singles1visita = data.jugador_id;
+            this.singles1visita = data.jugador_nombre;
 
           if(data.lv == 'l' && data.partido == 'S2')
-              this.singles2local = data.jugador_id;
+              this.singles2local = data.jugador_nombre;
 
           if(data.lv == 'v' && data.partido == 'S2')
-            this.singles2visita = data.jugador_id;
+            this.singles2visita = data.jugador_nombre;
 
           //dobles
           if(data.lv == 'l' && data.partido == 'D1')
-            this.dobleslocal1 = data.jugador_id;
+            this.dobleslocal1 = data.jugador_nombre;
           
           if(data.lv == 'l' && data.partido == 'D2')
-            this.dobleslocal2 = data.jugador_id;
+            this.dobleslocal2 = data.jugador_nombre;
 
           if(data.lv == 'v' && data.partido == 'D1')
-            this.doblesvisita1 = data.jugador_id;
+            this.doblesvisita1 = data.jugador_nombre;
           
           if(data.lv == 'v' && data.partido == 'D2')
-            this.doblesvisita2 = data.jugador_id;
+            this.doblesvisita2 = data.jugador_nombre;
 
               //console.log(res.rows.item(i).jugador_id);
           
@@ -130,26 +133,26 @@ export class JugadoresPage {
         this.visita = data['equipoVisitante']['id'];
         this.localNombre = data['equipoLocal']['club']['nombre'];
         this.visitaNombre = data['equipoVisitante']['club']['nombre'];
-        this.getBfLocal();
-        this.getBfVisita();
+        //this.getBfLocal();
+        //this.getBfVisita();
         this._utils.dismissMessages();
       });
 
 
    }
 
-   getBfLocal()
-   {
-      this._es.getBuenFe(this.local).subscribe( data =>{
-        this.bfLocal = data;
-      });
-   }
-   getBfVisita()
-   {
-      this._es.getBuenFe(this.visita).subscribe( data =>{
-        this.bfVisita = data;
-      });
-   }
+  //  getBfLocal()
+  //  {
+  //     this._es.getBuenFe(this.local).subscribe( data =>{
+  //       this.bfLocal = data;
+  //     });
+  //  }
+  //  getBfVisita()
+  //  {
+  //     this._es.getBuenFe(this.visita).subscribe( data =>{
+  //       this.bfVisita = data;
+  //     });
+  //  }
 
 
    //envia data de jugadores
@@ -267,7 +270,15 @@ export class JugadoresPage {
       // });
 
       this.navCtrl.pop();
+   }
 
+   agregarJugador(lv, partido, equipoId)
+   {
+     let modal = this.modalCt.create(NuevoJugadorPage,{'encuentroId':this.encuentroId,'lv':lv,'partido':partido,'equipoId':equipoId});
+      modal.onDidDismiss(data=>{
+        this.getData();
+      });
+      modal.present();
    }
   }
 

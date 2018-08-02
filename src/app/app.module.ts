@@ -23,6 +23,7 @@ import { JugadoresPage } from '../pages/jugadores/jugadores';
 import { UtilsService } from '../providers/utils/utils';
 import { DataBaseProvider } from '../providers/data-base/dataBase';
 import { SQLite } from '../../node_modules/@ionic-native/sqlite';
+import { NuevoJugadorPage } from '../pages/nuevo-jugador/nuevo-jugador';
 
 
 
@@ -34,6 +35,7 @@ import { SQLite } from '../../node_modules/@ionic-native/sqlite';
     MatchDetailPage,
     ResultadoPage,
     JugadoresPage,
+    NuevoJugadorPage,
   
   ],
   imports: [
@@ -50,6 +52,7 @@ import { SQLite } from '../../node_modules/@ionic-native/sqlite';
     MatchDetailPage,
     ResultadoPage,
     JugadoresPage,
+    NuevoJugadorPage,
   ],
   providers: [
     StatusBar,
