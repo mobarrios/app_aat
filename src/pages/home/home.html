@@ -19,22 +19,15 @@
   
 </ion-header>
 
-
 <ion-content>
-
-
-
         <ion-refresher (ionRefresh)="listEncuentros($event)">
           <ion-refresher-content
             pullingIcon="arrow-dropdown"
             refreshingText="Actualizando...">
           </ion-refresher-content>
         </ion-refresher>
-      
-
             <h3 text-center ><small>#{{club.id}} : </small>{{club.nombre}}</h3>
-
-    <hr>
+      <hr>
       <ion-list>
          <ion-item-sliding *ngFor="let enc of this.encuentro">
           <ion-item-options side="left">
@@ -51,7 +44,9 @@
               <p>{{enc.fecha}} </p>
               </ion-note>
           </ion-item>
-          <ion-item-options side="right">
+
+          <ion-item-options *ngIf="enc.resultados_id == null" side="right">
+            <p>{{enc.resultados_id}}</p>
               <button ion-button color="default" (click)="buenaFe(enc.encuentro_id)" ><ion-icon name="person"></ion-icon>Jugadores</button>
               <button ion-button color="secondary" (click)="goToResult(enc.encuentro_id)" ><ion-icon name="tennisball"></ion-icon>Puntos</button>
           </ion-item-options>
@@ -65,7 +60,14 @@
 </ion-content>
 
 <ion-footer >
-  <ion-navbar text-center>
-      <img  width="100px" src="assets/imgs/logo.png"> 
+  <ion-navbar >
+    <ion-row>
+        <ion-col>
+            <img  width="100px" src="assets/imgs/logo.png"> 
+        </ion-col>
+        <ion-col>
+            <p> v {{appVersion}}</p>
+          </ion-col>
+    </ion-row>
   </ion-navbar>
 </ion-footer>

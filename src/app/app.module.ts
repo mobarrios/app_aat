@@ -25,6 +25,9 @@ import { DataBaseProvider } from '../providers/data-base/dataBase';
 import { SQLite } from '../../node_modules/@ionic-native/sqlite';
 import { NuevoJugadorPage } from '../pages/nuevo-jugador/nuevo-jugador';
 
+import { AppVersion } from '@ionic-native/app-version';
+
+
 
 
 @NgModule({
@@ -63,6 +66,7 @@ import { NuevoJugadorPage } from '../pages/nuevo-jugador/nuevo-jugador';
     UtilsService,
     DataBaseProvider,
     SQLite,
+    AppVersion,
   ]
 })
 export class AppModule {}

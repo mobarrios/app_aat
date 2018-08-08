@@ -9,6 +9,9 @@ import { Storage } from '@ionic/storage';
 import { UtilsService } from '../../providers/utils/utils';
 import { ResultadoPage } from '../resultado/resultado';
 
+import { AppVersion } from '@ionic-native/app-version';
+
+
 
 @Component({
   selector: 'page-home',
@@ -18,16 +21,23 @@ export class HomePage {
 
   public encuentro:any = [];
   public club:any;
-
+  public appVersion;
 
   constructor(public navCtrl: NavController, 
               private _es:EncuentrosService, 
               public _us:UsersService,
               public storage:Storage,
-              public _utilsService:UtilsService) {
+              public _utilsService:UtilsService,
+              public version:AppVersion) {
         
           this.club = _us.getUserData().club;
           this.listEncuentrosStore();
+
+          version.getVersionNumber().then(data=>{
+            this.appVersion = data;
+          });
+
+
   }
 
   goToResult(encuentrosId:any)

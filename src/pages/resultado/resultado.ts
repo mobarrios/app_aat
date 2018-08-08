@@ -61,7 +61,7 @@ export class ResultadoPage {
   public vd_2:any = 0;
   public vd_3:any = 0;
 
-  public incidencias = 1 ;
+  public incidencias = "1" ;
 
 
   constructor(
@@ -304,45 +304,66 @@ export class ResultadoPage {
 
 
       this._db.db.executeSql('SELECT * FROM encuentros_jugadores WHERE encuentro_id = ?',[this.encuentroId]).then(res=>{
-        
+
         for (let i = 0; i < res.rows.length; i++) 
         {
-          let data = res.rows.item(i);
-
-          if(data.lv == 'l')
-                 this._es.getJugadoresData( data.jugador_id , this.localId).then(res => {
-                 this._db.db.executeSql('UPDATE encuentros_jugadores SET jugador_nombre=? WHERE id=?', [res['nombre'], data.id]);
-                 if(data.partido == 'S1')
-                        this.ls1_j1 = res['nombre'];
-                 if(data.partido == 'S2')
-                        this.ls2_j1 = res['nombre'];
-                 if(data.partido == 'D1')
-                        this.ld1_j1 = res['nombre'];
-                 if(data.partido == 'D2')
-                        this.ld1_j2 = res['nombre'];
-                });
-
-            if(data.lv == 'v')
-                this._es.getJugadoresData( data.jugador_id , this.visitaId).then(res => {
-                this._db.db.executeSql('UPDATE encuentros_jugadores SET jugador_nombre=? WHERE id=?', [res['nombre'], data.id]);
+            let data = res.rows.item(i);
+            if(data.lv == 'l'){
+                    // this._db.db.executeSql('SELECT * FROM jugadores WHERE id = ?', [data['judagor_id_store']]).then(r=>{
+                    //     let data = res.rows.item(0);
                 if(data.partido == 'S1')
-                        this.vs1_j1 = res['nombre'];
-                 if(data.partido == 'S2')
-                        this.vs2_j1 = res['nombre'];
-                 if(data.partido == 'D1')
-                        this.vd1_j1 = res['nombre'];
-                 if(data.partido == 'D2')
-                        this.vd1_j2 = res['nombre'];
-            });
+                    this.ls1_j1 = data['jugador_nombre'];
+                if(data.partido == 'S2')
+                    this.ls2_j1 = data['jugador_nombre'];
+                if(data.partido == 'D1')
+                    this.ld1_j1 = data['jugador_nombre'];
+                if(data.partido == 'D2')
+                    this.ld1_j2 = data['jugador_nombre'];
+                    //});
+            }  
+            if(data.lv == 'v'){
+            // this._db.db.executeSql('SELECT * FROM jugadores WHERE id = ?', [data['judagor_id_store']]).then(r=>{
+            //     let data = res.rows.item(0);
+                if(data.partido == 'S1')
+                        this.vs1_j1 = data['jugador_nombre'];
+                if(data.partido == 'S2')
+                        this.vs2_j1 = data['jugador_nombre'];
+                if(data.partido == 'D1')
+                        this.vd1_j1 = data['jugador_nombre'];
+                if(data.partido == 'D2')
+                        this.vd1_j2 = data['jugador_nombre'];
+            //});
+            }  
+                    
+
+                //  this._es.getJugadoresData( data.jugador_id , this.localId).then(res => {
+                //  this._db.db.executeSql('UPDATE encuentros_jugadores SET jugador_nombre=? WHERE id=?', [res['nombre'], data.id]);
+                //  if(data.partido == 'S1')
+                //         this.ls1_j1 = res['nombre'];
+                //  if(data.partido == 'S2')
+                //         this.ls2_j1 = res['nombre'];
+                //  if(data.partido == 'D1')
+                //         this.ld1_j1 = res['nombre'];
+                //  if(data.partido == 'D2')
+                //         this.ld1_j2 = res['nombre'];
+                //});
+
+            // if(data.lv == 'v')
+            //     this._es.getJugadoresData( data.jugador_id , this.visitaId).then(res => {
+            //     this._db.db.executeSql('UPDATE encuentros_jugadores SET jugador_nombre=? WHERE id=?', [res['nombre'], data.id]);
+            //     if(data.partido == 'S1')
+            //             this.vs1_j1 = res['nombre'];
+            //      if(data.partido == 'S2')
+            //             this.vs2_j1 = res['nombre'];
+            //      if(data.partido == 'D1')
+            //             this.vd1_j1 = res['nombre'];
+            //      if(data.partido == 'D2')
+            //             this.vd1_j2 = res['nombre'];
+            // });
           
-        }
+            }
       });
-
-
-
-
     this.enc = this._es.getEncuentrosLocalData(this.encuentroId);
-
    }
  
 

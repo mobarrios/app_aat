@@ -62,8 +62,8 @@ export class UsersService {
     //data.append("password",pass);
 
     //testing
-    this.body =  {'email':'leandro.antonelli2@gmail.com' , 'password':'Aa123456!'};
-    //this.body =  {'email':user, 'password':pass};
+    this.body =  {'email':'lynch.tomasm@gmail.com' , 'password':'Abcd1232*'};
+   //this.body =  {'email':user, 'password':pass};
 
     let url = this.url + "/Account/Login"; 
     
@@ -76,7 +76,6 @@ export class UsersService {
             this.storeUser(res).then(data => resolve(res));
           },(err)=>{reject(err);})
     });
-
 
   }
 

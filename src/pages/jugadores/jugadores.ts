@@ -109,6 +109,13 @@ export class JugadoresPage {
         }
       });
 
+      this._es.getEncuntroStore(this.encuentroId).then(res=>{
+          let data = res.rows.item(0);
+          this.localNombre = data.club_local_nombre;
+          this.visitaNombre = data.club_visita_nombre;
+          this.local = data.equipo_local_id;
+          this.visita = data.equipo_visita_id;
+      });
 
 
       // if(this.enc)
@@ -126,17 +133,17 @@ export class JugadoresPage {
 
 
 
-     this._es.getEncuentro(this.encuentroId).subscribe(data => {
-       this._utils.showMessages('Sincronizando Lista de Buena Fé..')
+    //  this._es.getEncuentro(this.encuentroId).subscribe(data => {
+    //    this._utils.showMessages('Sincronizando Lista de Buena Fé..')
         
-        this.local = data['equipoLocal']['id'];
-        this.visita = data['equipoVisitante']['id'];
-        this.localNombre = data['equipoLocal']['club']['nombre'];
-        this.visitaNombre = data['equipoVisitante']['club']['nombre'];
-        //this.getBfLocal();
-        //this.getBfVisita();
-        this._utils.dismissMessages();
-      });
+    //     this.local = data['equipoLocal']['id'];
+    //     this.visita = data['equipoVisitante']['id'];
+    //     this.localNombre = data['equipoLocal']['club']['nombre'];
+    //     this.visitaNombre = data['equipoVisitante']['club']['nombre'];
+    //     //this.getBfLocal();
+    //     //this.getBfVisita();
+    //     this._utils.dismissMessages();
+    //   });
 
 
    }
@@ -164,7 +171,6 @@ export class JugadoresPage {
     if(this.singles1visita == this.singles2visita)
       this._utils.showMessages('Alerta','El Jugador del Equipo Visitante, Single 1, no puede ser el mismo que el Single2',true);
       
-
 
     this._utils.showLoading('Guardando...');
 

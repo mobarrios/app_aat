@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { DataBaseProvider } from '../../providers/data-base/dataBase';
 import { EncuentrosService } from '../../providers/encuentros/encuentros';
+import { UtilsService } from '../../providers/utils/utils';
 
 /**
  * Generated class for the NuevoJugadorPage page.
@@ -28,7 +29,8 @@ export class NuevoJugadorPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public _db:DataBaseProvider, public viewCtrl: ViewController,
-    public _es:EncuentrosService
+    public _es:EncuentrosService,
+    public _uts:UtilsService,
   ) {
 
     this.encuentro_id = navParams.get('encuentroId');
@@ -37,8 +39,6 @@ export class NuevoJugadorPage {
     this.equipoId = navParams.get('equipoId');
 
     this.getData();
-
-
   }
 
   public guardar()
@@ -46,7 +46,6 @@ export class NuevoJugadorPage {
 
     this._db.db.executeSql('INSERT INTO jugadores(dni, id_jugador, nombre) VALUES(?,?,?)',[this.dni,this.id, this.nombre]).then(
       res => {
-        console.log('cargo');
         this._db.db.executeSql("INSERT INTO encuentros_jugadores ('encuentro_id' , 'lv' ,'partido' ,'jugador_nombre','jugador_id_store')values(?,?,?,?,?)",[this.encuentro_id, this.lv , this.partido , this.nombre , res['insertId'] ]
       );
       this.cerrar();
@@ -62,8 +61,11 @@ export class NuevoJugadorPage {
   }
 
   getData(){
-    this._es.getBuenFe(this.equipoId).subscribe( data =>{
+    
+    this._uts.showMessages('Info','Listando Jugadores...');
+    this._es.getBuenFe(this.equipoId, this.encuentro_id).subscribe( data => {
       this.bf = data;
+      this._uts.dismissMessages();
     });
   }
 
