@@ -63,8 +63,7 @@ export class EncuentrosService {
 
     //let body = {'encuentroId': encuentroId, 'equipoId': equipoId};
     //let url = this.url + '/equipo/'+equipoId+'/listabuenafe';
-    console.log(encuentroId);
-    console.log(equipoId);
+  
 
     let url = this.url + '/listabuenafe/'+encuentroId+'/'+equipoId;
     return this.http.get(url, httpOptions); 
@@ -115,18 +114,31 @@ export class EncuentrosService {
   storeEncuentros(res)
   {
     let user = this._us.user.id;
+
     for (let index = 0; index < res.length; index++) 
     {
-
-             this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ?',  [res[index].id]).then(r=>{
+             this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ? AND user_id = ?',  [res[index].id, user]).then(r=>{
       
               if(r.rows.length == 0)
               {
                 let resId;
-                if(res[index].resultados.length >= 1)
-                    resId = res[index].resultados[0].id;
+                let p1Tipo = 's';
+                let p2Tipo = 's';
+                let p3Tipo = 's';
+                let incidente = 1;
 
-                let sql = 'INSERT INTO encuentros(user_id ,encuentro_id, equipo_local_id, equipo_visita_id, club_local_id, club_local_nombre, club_visita_id, club_visita_nombre, campeonato,categoria,division, fecha, resultados_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+                
+                if(res[index].resultados.length >= 1)
+                {
+                  resId = res[index].resultados[0].id;
+
+                  // if(res[index].resultados[0].partidos != 'NULL')
+                  // {
+                  //   console.log(res[index].resultados[0].partidos[0].incidente);
+                  // }
+                }
+
+                let sql = 'INSERT INTO encuentros(user_id ,encuentro_id, equipo_local_id, equipo_visita_id, club_local_id, club_local_nombre, club_visita_id, club_visita_nombre, campeonato,categoria,division, fecha, resultados_id,p1_tipo, p2_tipo, p3_tipo,incidencias) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
                 this._db.db.executeSql(sql, [ 
                   user,
                   res[index].id, 
@@ -140,8 +152,13 @@ export class EncuentrosService {
                   res[index].categoria.descripcion, 
                   res[index].division.descripcion,
                   res[index].fecha,
-                  resId ]);
-              } 
+                  resId,
+                  p1Tipo,
+                  p2Tipo,
+                  p3Tipo,
+                  incidente
+                ]);
+              }
             }); 
             
             
@@ -188,58 +205,110 @@ export class EncuentrosService {
 
     let s1LJId = s1.jugadorIdLocal1;
     let s1LJN = s1.jugadorNombreLocal1; 
+    let s1LJId2 = s1.jugadorIdLocal2;
+    let s1LJN2 = s1.jugadorNombreLocal2; 
 
+    // jugador local 1
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s1LJId]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s1LJId,s1LJN]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','S1',r.insertId,s1LJN]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p11',r.insertId,s1LJN]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','S1',res.rows.item(0),s1LJN]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p11',res.rows.item(0),s1LJN]);
+      }
+    });
+    // jugador local 2
+    this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s1LJId2]).then(res=>{
+      if(res.rows.length == 0){
+          this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s1LJId2,s1LJN2]).then(r => {
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p12',r.insertId,s1LJN2]);
+          });
+      }
+      else{
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p12',res.rows.item(0),s1LJN2]);
       }
     });
 
     let s1VJId = s1.jugadorIdVisita1;
     let s1VJN = s1.jugadorNombreVisita1; 
+    let s1VJId2 = s1.jugadorIdVisita2;
+    let s1VJN2 = s1.jugadorNombreVisita2; 
 
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s1VJId]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s1VJId,s1VJN]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','S1',r.insertId,s1VJN]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p11',r.insertId,s1VJN]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','S1',res.rows.item(0),s1VJN]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p11',res.rows.item(0),s1VJN]);
+      }
+    });
+
+    this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s1VJId2]).then(res=>{
+      if(res.rows.length == 0){
+          this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s1VJId2,s1VJN2]).then(r => {
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p12',r.insertId,s1VJN2]);
+          });
+      }
+      else{
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p12',res.rows.item(0),s1VJN2]);
       }
     });
 
 
     let s2LJId = s2.jugadorIdLocal1;
     let s2LJN = s2.jugadorNombreLocal1; 
+    let s2LJId2 = s2.jugadorIdLocal2;
+    let s2LJN2 = s2.jugadorNombreLocal2; 
 
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s2LJId]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s2LJId,s2LJN]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','S2',r.insertId,s2LJN]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p21',r.insertId,s2LJN]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','S2',res.rows.item(0),s2LJN]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p21',res.rows.item(0),s2LJN]);
+      }
+    });
+    this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s2LJId2]).then(res=>{
+      if(res.rows.length == 0){
+          this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s2LJId2,s2LJN2]).then(r => {
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p22',r.insertId,s2LJN2]);
+          });
+      }
+      else{
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p22',res.rows.item(0),s2LJN2]);
       }
     });
 
     let s2VJId = s2.jugadorIdVisita1;
     let s2VJN = s2.jugadorNombreVisita1; 
+    let s2VJId2 = s2.jugadorIdVisita2;
+    let s2VJN2 = s2.jugadorNombreVisita2; 
 
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s2VJId]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s2VJId,s2VJN]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','S2',r.insertId,s2VJN]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p21',r.insertId,s2VJN]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','S2',res.rows.item(0),s2VJN]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p21',res.rows.item(0),s2VJN]);
+      }
+    });
+
+    this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[s2VJId2]).then(res=>{
+      if(res.rows.length == 0){
+          this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[s2VJId2,s2VJN2]).then(r => {
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p22',r.insertId,s2VJN2]);
+          });
+      }
+      else{
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p22',res.rows.item(0),s2VJN2]);
       }
     });
 
@@ -250,11 +319,11 @@ export class EncuentrosService {
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[d1LJ1Id]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[d1LJ1Id,d1LJ1N]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','D1',r.insertId,d1LJ1N]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p31',r.insertId,d1LJ1N]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','D1',res.rows.item(0),d1LJ1N]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p31',res.rows.item(0),d1LJ1N]);
       }
     });
 
@@ -264,11 +333,11 @@ export class EncuentrosService {
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[d1LJ2Id]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[d1LJ2Id,d1LJ2N]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','D2',r.insertId,d1LJ2N]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p32',r.insertId,d1LJ2N]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','D2',res.rows.item(0),d1LJ2N]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'l','p32',res.rows.item(0),d1LJ2N]);
       }
     });
 
@@ -279,11 +348,11 @@ export class EncuentrosService {
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[d1VJ1Id]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[d1VJ1Id,d1VJ1N]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','D1',r.insertId,d1VJ1N]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p31',r.insertId,d1VJ1N]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','D1',res.rows.item(0),d1VJ1N]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p31',res.rows.item(0),d1VJ1N]);
       }
     });
 
@@ -293,11 +362,11 @@ export class EncuentrosService {
     this._db.db.executeSql('SELECT * FROM jugadores WHERE id_jugador = ?',[d1VJ2Id]).then(res=>{
       if(res.rows.length == 0){
           this._db.db.executeSql('INSERT INTO jugadores(id_jugador , nombre) VALUES(?,?)',[d1VJ2Id,d1VJ2N]).then(r => {
-          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','D2',r.insertId,d1VJ2N]);
+          this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p32',r.insertId,d1VJ2N]);
           });
       }
       else{
-        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','D2',res.rows.item(0),d1VJ2N]);
+        this._db.db.executeSql('INSERT INTO encuentros_jugadores(encuentro_id, lv, partido , jugador_id_store, jugador_nombre) VALUES(?,?,?,?,?)',[resultados.encuentroId,'v','p32',res.rows.item(0),d1VJ2N]);
       }
     });
   }

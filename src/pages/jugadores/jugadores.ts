@@ -32,14 +32,24 @@ export class JugadoresPage {
   public bfLocal:any =[];
   public bfVisita:any =[];
 
-  public singles1local;
-  public singles1visita;
-  public singles2local;
-  public singles2visita;
+  public singles1local1;
+  public singles1local2;
+  public singles1visita1;
+  public singles1visita2;
+
+  public singles2local1;
+  public singles2local2;
+  public singles2visita1;
+  public singles2visita2;
+
   public dobleslocal1;
   public dobleslocal2;
   public doblesvisita1;
   public doblesvisita2;
+
+  public p1_tipo ;
+  public p2_tipo ;
+  public p3_tipo ;
 
 
 
@@ -79,33 +89,40 @@ export class JugadoresPage {
         for (let i = 0; i < res.rows.length; i++) {
           let data = res.rows.item(i);
           
-          if(data.lv == 'l' && data.partido == 'S1')
-              this.singles1local = data.jugador_nombre;
+          // partido 1 local
+          if(data.lv == 'l' && data.partido == 'p11')
+              this.singles1local1 = data.jugador_nombre;
+          if(data.lv == 'l' && data.partido == 'p12')
+              this.singles1local2 = data.jugador_nombre;
+          //partido 1 visita
+          if(data.lv == 'v' && data.partido == 'p11')
+            this.singles1visita1 = data.jugador_nombre;
+          if(data.lv == 'v' && data.partido == 'p12')
+            this.singles1visita2 = data.jugador_nombre;
 
-          if(data.lv == 'v' && data.partido == 'S1')
-            this.singles1visita = data.jugador_nombre;
+          // partido 2 local
+          if(data.lv == 'l' && data.partido == 'p21')
+              this.singles2local1 = data.jugador_nombre;
+          if(data.lv == 'l' && data.partido == 'p22')
+              this.singles2local2 = data.jugador_nombre;
 
-          if(data.lv == 'l' && data.partido == 'S2')
-              this.singles2local = data.jugador_nombre;
+          //partido 2 visita
+          if(data.lv == 'v' && data.partido == 'p21')
+            this.singles2visita1 = data.jugador_nombre;
+          if(data.lv == 'v' && data.partido == 'p22')
+            this.singles2visita2 = data.jugador_nombre;
 
-          if(data.lv == 'v' && data.partido == 'S2')
-            this.singles2visita = data.jugador_nombre;
-
-          //dobles
-          if(data.lv == 'l' && data.partido == 'D1')
-            this.dobleslocal1 = data.jugador_nombre;
-          
-          if(data.lv == 'l' && data.partido == 'D2')
+          //partido 3 local
+          if(data.lv == 'l' && data.partido == 'p31')
+            this.dobleslocal1 = data.jugador_nombre; 
+          if(data.lv == 'l' && data.partido == 'p32')
             this.dobleslocal2 = data.jugador_nombre;
 
-          if(data.lv == 'v' && data.partido == 'D1')
+          //partido 3 visita
+          if(data.lv == 'v' && data.partido == 'p31')
             this.doblesvisita1 = data.jugador_nombre;
-          
-          if(data.lv == 'v' && data.partido == 'D2')
-            this.doblesvisita2 = data.jugador_nombre;
-
-              //console.log(res.rows.item(i).jugador_id);
-          
+          if(data.lv == 'v' && data.partido == 'p32')
+            this.doblesvisita2 = data.jugador_nombre;          
         }
       });
 
@@ -115,6 +132,9 @@ export class JugadoresPage {
           this.visitaNombre = data.club_visita_nombre;
           this.local = data.equipo_local_id;
           this.visita = data.equipo_visita_id;
+          this.p1_tipo = data.p1_tipo;
+          this.p2_tipo = data.p2_tipo;
+          this.p3_tipo = data.p3_tipo;
       });
 
 
@@ -163,120 +183,120 @@ export class JugadoresPage {
 
 
    //envia data de jugadores
-   sendPlayers(){
+  //  sendPlayers(){
 
-    if(this.singles1local == this.singles2local)
-      this._utils.showMessages('Alerta','El Jugador del Equipo Local, Single 1, no puede ser el mismo que el Single2',true);
+  //   if(this.singles1local1 == this.singles2local)
+  //     this._utils.showMessages('Alerta','El Jugador del Equipo Local, Single 1, no puede ser el mismo que el Single2',true);
      
-    if(this.singles1visita == this.singles2visita)
-      this._utils.showMessages('Alerta','El Jugador del Equipo Visitante, Single 1, no puede ser el mismo que el Single2',true);
+  //   if(this.singles1visita == this.singles2visita)
+  //     this._utils.showMessages('Alerta','El Jugador del Equipo Visitante, Single 1, no puede ser el mismo que el Single2',true);
       
 
-    this._utils.showLoading('Guardando...');
+  //   this._utils.showLoading('Guardando...');
 
-    // let enc = {
-    //   'id': this.encuentroId , 
-    //   'jugadorLocalSingle1' : this.singles1local,
-    //   'jugadorVisitaSingle1' : this.singles1visita,
-    //   'jugadorLocalSingle2' : this.singles2local,
-    //   'jugadorVisitaSingle2' : this.singles2visita,
-    //   'jugadorLocal1Doble' : this.dobleslocal1,
-    //   'jugadorLocal2Doble' : this.dobleslocal2,
-    //   'jugadorVisita1Doble' : this.doblesvisita1,
-    //   'jugadorVisita2Doble' : this.doblesvisita2,      
-    // };
+  //   // let enc = {
+  //   //   'id': this.encuentroId , 
+  //   //   'jugadorLocalSingle1' : this.singles1local,
+  //   //   'jugadorVisitaSingle1' : this.singles1visita,
+  //   //   'jugadorLocalSingle2' : this.singles2local,
+  //   //   'jugadorVisitaSingle2' : this.singles2visita,
+  //   //   'jugadorLocal1Doble' : this.dobleslocal1,
+  //   //   'jugadorLocal2Doble' : this.dobleslocal2,
+  //   //   'jugadorVisita1Doble' : this.doblesvisita1,
+  //   //   'jugadorVisita2Doble' : this.doblesvisita2,      
+  //   // };
 
-      if(this.platform.is('cordova'))
-      {
-              this.storage.set(this.encuentroId, this.enc);
-      }else{
-              localStorage.setItem(this.encuentroId, JSON.stringify(this.enc));  
-      }
+  //     if(this.platform.is('cordova'))
+  //     {
+  //             this.storage.set(this.encuentroId, this.enc);
+  //     }else{
+  //             localStorage.setItem(this.encuentroId, JSON.stringify(this.enc));  
+  //     }
 
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'S1' ]).then(res => {
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'S1' ]).then(res => {
         
-        if(res.rows.length == 0 && this.singles1local != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'l','S1',this.singles1local]);
-        } 
-        //   else
-        // {
-        //   let sql1 = 'UPDATE encuentros SET jugador_id=? WHERE id=?';
-        //   this._db.db.executeSql(sql1, [ this.singles1local, 1]);
-        // }
+  //       if(res.rows.length == 0 && this.singles1local != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'l','S1',this.singles1local]);
+  //       } 
+  //       //   else
+  //       // {
+  //       //   let sql1 = 'UPDATE encuentros SET jugador_id=? WHERE id=?';
+  //       //   this._db.db.executeSql(sql1, [ this.singles1local, 1]);
+  //       // }
   
-      });     
+  //     });     
 
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'S1' ]).then(res => {
-        if(res.rows.length == 0 && this.singles1visita != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'v','S1',this.singles1visita]);
-        } 
-      });   
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'S1' ]).then(res => {
+  //       if(res.rows.length == 0 && this.singles1visita != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'v','S1',this.singles1visita]);
+  //       } 
+  //     });   
       
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'S2' ]).then(res => {
-        if(res.rows.length == 0 && this.singles2local != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'l','S2',this.singles2local]);
-        } 
-      });     
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'S2' ]).then(res => {
+  //       if(res.rows.length == 0 && this.singles2local != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'l','S2',this.singles2local]);
+  //       } 
+  //     });     
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'S2' ]).then(res => {
-        if(res.rows.length == 0  && this.singles2visita != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'v','S2',this.singles2visita]);
-        } 
-      });   
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'S2' ]).then(res => {
+  //       if(res.rows.length == 0  && this.singles2visita != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'v','S2',this.singles2visita]);
+  //       } 
+  //     });   
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D1' ]).then(res => {
-        if(res.rows.length == 0  && this.dobleslocal1 != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'l','D1',this.dobleslocal1]);
-        } 
-      });   
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D1' ]).then(res => {
+  //       if(res.rows.length == 0  && this.dobleslocal1 != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'l','D1',this.dobleslocal1]);
+  //       } 
+  //     });   
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D2' ]).then(res => {
-        if(res.rows.length == 0  && this.dobleslocal2 != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'l','D2',this.dobleslocal2]);
-        } 
-      });   
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'l', 'D2' ]).then(res => {
+  //       if(res.rows.length == 0  && this.dobleslocal2 != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'l','D2',this.dobleslocal2]);
+  //       } 
+  //     });   
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'D1' ]).then(res => {
-        if(res.rows.length == 0  && this.doblesvisita1 != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'v','D1',this.doblesvisita1]);
-        } 
-      });   
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'D1' ]).then(res => {
+  //       if(res.rows.length == 0  && this.doblesvisita1 != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'v','D1',this.doblesvisita1]);
+  //       } 
+  //     });   
 
-      this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'D2' ]).then(res => {
-        if(res.rows.length == 0  && this.doblesvisita2 != null)
-        {
-          let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
-          this._db.db.executeSql(sql, [ this.encuentroId, 'v','D2',this.doblesvisita2]);
-        } 
-      });   
+  //     this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ? AND lv = ? AND partido = ?',[ this.encuentroId, 'v', 'D2' ]).then(res => {
+  //       if(res.rows.length == 0  && this.doblesvisita2 != null)
+  //       {
+  //         let sql = 'INSERT INTO encuentros_jugadores(encuentro_id,lv,partido,jugador_id) VALUES(?,?,?,?)';
+  //         this._db.db.executeSql(sql, [ this.encuentroId, 'v','D2',this.doblesvisita2]);
+  //       } 
+  //     });   
 
 
-      // this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ?', [this.encuentroId]).then(res => {
+  //     // this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ?', [this.encuentroId]).then(res => {
         
-      //   for (let i = 0; i < res.rows.length; i++) {
-      //     this._es.getJugadoresData(res.rows.item(i).jugador_id,);
-      //   }
+  //     //   for (let i = 0; i < res.rows.length; i++) {
+  //     //     this._es.getJugadoresData(res.rows.item(i).jugador_id,);
+  //     //   }
 
-      // });
+  //     // });
 
-      this.navCtrl.pop();
-   }
+  //     this.navCtrl.pop();
+  //  }
 
    agregarJugador(lv, partido, equipoId)
    {
@@ -286,6 +306,22 @@ export class JugadoresPage {
       });
       modal.present();
    }
+
+
+   //cambia el tipo de partido
+   cambiaTipo(tipo:any,partido:any)
+   {
+    console.log(tipo, partido);
+    if(partido == 'p1') 
+      this._db.db.executeSql('UPDATE encuentros set p1_tipo = ? WHERE encuentro_id = ?',[ tipo,this.encuentroId]);
+
+    if(partido == 'p2') 
+      this._db.db.executeSql('UPDATE encuentros set p2_tipo = ? WHERE encuentro_id = ?',[tipo, this.encuentroId]);
+
+    if(partido == 'p3') 
+      this._db.db.executeSql('UPDATE encuentros set p3_tipo = ? WHERE encuentro_id = ?',[tipo, this.encuentroId]);
+   }
+
   }
 
 

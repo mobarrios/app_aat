@@ -68,7 +68,7 @@ export class DataBaseProvider {
   }
 
   createTableEncuentros(){
-    let sql = 'CREATE TABLE IF NOT EXISTS encuentros(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, encuentro_id INTEGER, equipo_local_id INTEGER , equipo_visita_id INTEGER, club_local_id INTEGER, club_local_nombre TEXT , club_visita_id INTEGER, club_visita_nombre TEXT, campeonato TEXT, categoria TEXT, division TEXT , fecha DATE, resultados_id INTEGER, incidencias INTEGER,confirmacion BOOLEAN, confirmacion_comentario TEXT)';
+    let sql = 'CREATE TABLE IF NOT EXISTS encuentros(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, encuentro_id INTEGER, equipo_local_id INTEGER , equipo_visita_id INTEGER, club_local_id INTEGER, club_local_nombre TEXT , club_visita_id INTEGER, club_visita_nombre TEXT, campeonato TEXT, categoria TEXT, division TEXT , fecha DATE, resultados_id INTEGER, incidencias INTEGER,confirmacion BOOLEAN, confirmacion_comentario TEXT, p1_tipo INTEGER, p2_tipo INTEGER, p3_tipo INTEGER)';
     return this.db.executeSql(sql, []);
   }
 

@@ -43,16 +43,12 @@ export class NuevoJugadorPage {
 
   public guardar()
   {
-
     this._db.db.executeSql('INSERT INTO jugadores(dni, id_jugador, nombre) VALUES(?,?,?)',[this.dni,this.id, this.nombre]).then(
       res => {
         this._db.db.executeSql("INSERT INTO encuentros_jugadores ('encuentro_id' , 'lv' ,'partido' ,'jugador_nombre','jugador_id_store')values(?,?,?,?,?)",[this.encuentro_id, this.lv , this.partido , this.nombre , res['insertId'] ]
       );
       this.cerrar();
     });
-
-  
-
   }
 
   public cerrar()

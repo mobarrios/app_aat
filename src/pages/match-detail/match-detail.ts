@@ -29,34 +29,43 @@ export class MatchDetailPage {
   public visita_nombre;
   public fecha; 
   public incidencias;
+  public p1_tipo;
+  public p2_tipo;
+  public p3_tipo;
 
-  public s1_loc_jug;
-  public s1_loc_jug_n;
-  public s1_vis_jug;
-  public s1_vis_jug_n;
+  public s1_loc_jug_1 = 0 ;
+  public s1_loc_jug_n_1;
+  public s1_loc_jug_2 = 0 ;
+  public s1_loc_jug_n_2;
+  public s1_vis_jug_1 = 0 ;
+  public s1_vis_jug_n_1;
+  public s1_vis_jug_2 = 0 ;
+  public s1_vis_jug_n_2;
   public s1_sets;
   public s1_l_t_sets = 0;
   public s1_v_t_sets = 0;
 
-
-
-  public s2_loc_jug;
-  public s2_loc_jug_n;
-  public s2_vis_jug;
-  public s2_vis_jug_n;
+  public s2_loc_jug_1 = 0 ;
+  public s2_loc_jug_n_1;
+  public s2_loc_jug_2 = 0 ;
+  public s2_loc_jug_n_2;
+  public s2_vis_jug_1 = 0 ;
+  public s2_vis_jug_n_1;
+  public s2_vis_jug_2 = 0 ;
+  public s2_vis_jug_n_2;
   public s2_sets;
   public s2_l_t_sets = 0;
   public s2_v_t_sets = 0;
 
 
 
-  public d1_loc_jug_1;
+  public d1_loc_jug_1 = 0 ;
   public d1_loc_jug_1_n;
-  public d1_loc_jug_2;
+  public d1_loc_jug_2 = 0 ;
   public d1_loc_jug_2_n;
-  public d1_vis_jug_1;
+  public d1_vis_jug_1 = 0 ;
   public d1_vis_jug_1_n;
-  public d1_vis_jug_2;
+  public d1_vis_jug_2 = 0 ;
   public d1_vis_jug_2_n;
   public d1_sets;
   public d1_l_t_sets = 0;
@@ -115,6 +124,9 @@ export class MatchDetailPage {
               this.comentarios = data.confirmacion_comentario;
               this.resultsId = data.resultados_id;
               this.confirm = data.confirmacion;
+              this.p1_tipo =  data.p1_tipo;
+              this.p2_tipo =  data.p2_tipo;
+              this.p3_tipo =  data.p3_tipo;
         }
       });
 
@@ -245,56 +257,93 @@ export class MatchDetailPage {
           let data = res.rows.item(i);
           
               //console.log(res.rows.item(i).jugador_id); 
-              if(data.lv == 'l' && data.partido == 'S1')
+              if(data.lv == 'l' && data.partido == 'p11')
               {
                   this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
-                    this.s1_loc_jug = r.rows.item(0).id_jugador;
+                    this.s1_loc_jug_1 = r.rows.item(0).id_jugador;
                   });
-                this.s1_loc_jug_n = data.jugador_nombre;
+                this.s1_loc_jug_n_1 = data.jugador_nombre;
               }
-              if(data.lv == 'v' && data.partido == 'S1')
+              if(data.lv == 'l' && data.partido == 'p12')
+              {
+                  this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
+                    this.s1_loc_jug_2 = r.rows.item(0).id_jugador;
+                  });
+                this.s1_loc_jug_n_2 = data.jugador_nombre;
+              }
+
+              if(data.lv == 'v' && data.partido == 'p11')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
-                    this.s1_vis_jug = r.rows.item(0).id_jugador;
+                    this.s1_vis_jug_1 = r.rows.item(0).id_jugador;
+                    console.log(r.rows.item(0));
                   });
-                this.s1_vis_jug_n = data.jugador_nombre;
+                this.s1_vis_jug_n_1 = data.jugador_nombre;
               }
-              if(data.lv == 'l' && data.partido == 'S2')
+
+              if(data.lv == 'v' && data.partido == 'p12')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
-                    this.s2_loc_jug = r.rows.item(0).id_jugador;
+                    this.s1_vis_jug_2 = r.rows.item(0).id_jugador;
                   });
-                this.s2_loc_jug_n = data.jugador_nombre;
+                this.s1_vis_jug_n_2 = data.jugador_nombre;
               }
-              if(data.lv == 'v' && data.partido == 'S2')
+
+
+
+              if(data.lv == 'l' && data.partido == 'p21')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
-                    this.s2_vis_jug = r.rows.item(0).id_jugador;
+                    this.s2_loc_jug_1 = r.rows.item(0).id_jugador;
                   });
-                this.s2_vis_jug_n = data.jugador_nombre;
+                this.s2_loc_jug_n_1 = data.jugador_nombre;
               }
-              if(data.lv == 'l' && data.partido == 'D1')
+              if(data.lv == 'l' && data.partido == 'p22')
+              {
+                this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
+                    this.s2_loc_jug_2 = r.rows.item(0).id_jugador;
+                  });
+                this.s2_loc_jug_n_2 = data.jugador_nombre;
+              }
+
+              if(data.lv == 'v' && data.partido == 'p21')
+              {
+                this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
+                    this.s2_vis_jug_1 = r.rows.item(0).id_jugador;
+                  });
+                this.s2_vis_jug_n_1 = data.jugador_nombre;
+              }
+              if(data.lv == 'v' && data.partido == 'p22')
+              {
+                this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
+                    this.s2_vis_jug_2 = r.rows.item(0).id_jugador;
+                  });
+                this.s2_vis_jug_n_2 = data.jugador_nombre;
+              }
+
+
+              if(data.lv == 'l' && data.partido == 'p31')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_loc_jug_1 = r.rows.item(0).id_jugador;
                   });
                 this.d1_loc_jug_1_n = data.jugador_nombre;
               }
-              if(data.lv == 'l' && data.partido == 'D2')
+              if(data.lv == 'l' && data.partido == 'p32')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_loc_jug_2 = r.rows.item(0).id_jugador;
                   });
                 this.d1_loc_jug_2_n = data.jugador_nombre;
               }
-              if(data.lv == 'v' && data.partido == 'D1')
+              if(data.lv == 'v' && data.partido == 'p31')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_vis_jug_1 = r.rows.item(0).id_jugador;
                   });
                 this.d1_vis_jug_1_n = data.jugador_nombre;
               }
-              if(data.lv == 'v' && data.partido == 'D2')
+              if(data.lv == 'v' && data.partido == 'p32')
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_vis_jug_2 = r.rows.item(0).id_jugador;
@@ -313,37 +362,37 @@ export class MatchDetailPage {
       'encuentroId':this.encuentroId,
       'partidos':[
         {
-          'tipo':'S1',
+          'tipo': this.p1_tipo,
           "equipoIdLocal": this.local_id,
           "equipoIdVisita": this.visita_id,
-          'jugadorIdLocal1' : this.s1_loc_jug,
-          'jugadorIdLocal2' : 0,
-          'jugadorIdVisita1' : this.s1_vis_jug,
-          'jugadorIdVisita2' : 0,
+          'jugadorIdLocal1' : this.s1_loc_jug_1,
+          'jugadorIdLocal2' : this.s1_loc_jug_2,
+          'jugadorIdVisita1' : this.s1_vis_jug_1,
+          'jugadorIdVisita2' : this.s1_vis_jug_2,
           'sets': this.s1_sets,
           "incidente": this.incidencias,
-          "jugadoresAdicionales": [
-            {
-                "id": 0,
-                "equipoId": this.local_id,
-                "numeroDocumento": 12345678,
-                "nombre": "Leandrito"
-            }
-        ]
+        //   "jugadoresAdicionales": [
+        //     {
+        //         "id": 0,
+        //         "equipoId": this.local_id,
+        //         "numeroDocumento": 12345678,
+        //         "nombre": "Leandrito"
+        //     }
+        // ]
         },
         {
-          'tipo':'S2',
+          'tipo':this.p2_tipo,
           "equipoIdLocal": this.local_id,
           "equipoIdVisita": this.visita_id,
-          'jugadorIdLocal1' : this.s2_loc_jug,
-          'jugadorIdLocal2' : 0,
-          'jugadorIdVisita1' : this.s2_vis_jug,
-          'jugadorIdVisita2' : 0,
+          'jugadorIdLocal1' : this.s2_loc_jug_1,
+          'jugadorIdLocal2' : this.s2_loc_jug_2,
+          'jugadorIdVisita1' : this.s2_vis_jug_1,
+          'jugadorIdVisita2' : this.s2_vis_jug_2,
           'sets':this.s2_sets,
           "incidente": this.incidencias
         },
         {
-          'tipo':'D1',
+          'tipo':this.p3_tipo,
           "equipoIdLocal": this.local_id,
           "equipoIdVisita": this.visita_id,
           'jugadorIdLocal1' : this.d1_loc_jug_1,
@@ -355,6 +404,8 @@ export class MatchDetailPage {
         }
       ]
     };
+
+    console.table(data);
 
      this._es.postEncuentrosResultados(data).then(res=>{
         

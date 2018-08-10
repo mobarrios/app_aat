@@ -29,9 +29,15 @@ export class ResultadoPage {
   public enc:Encuentro;
 
   public ls1_j1;
+  public ls1_j2;
   public vs1_j1;
+  public vs1_j2;
+
   public ls2_j1;
+  public ls2_j2;
   public vs2_j1;
+  public vs2_j2;
+
   public ld1_j1;
   public ld1_j2;
   public vd1_j1;
@@ -309,30 +315,38 @@ export class ResultadoPage {
         {
             let data = res.rows.item(i);
             if(data.lv == 'l'){
-                    // this._db.db.executeSql('SELECT * FROM jugadores WHERE id = ?', [data['judagor_id_store']]).then(r=>{
-                    //     let data = res.rows.item(0);
-                if(data.partido == 'S1')
+
+                if(data.partido == 'p11')
                     this.ls1_j1 = data['jugador_nombre'];
-                if(data.partido == 'S2')
+                if(data.partido == 'p12')
+                    this.ls1_j2 = data['jugador_nombre'];
+
+                if(data.partido == 'p21')
                     this.ls2_j1 = data['jugador_nombre'];
-                if(data.partido == 'D1')
+                if(data.partido == 'p22')
+                    this.ls2_j2 = data['jugador_nombre'];
+
+                if(data.partido == 'p31')
                     this.ld1_j1 = data['jugador_nombre'];
-                if(data.partido == 'D2')
+                if(data.partido == 'p32')
                     this.ld1_j2 = data['jugador_nombre'];
-                    //});
             }  
             if(data.lv == 'v'){
-            // this._db.db.executeSql('SELECT * FROM jugadores WHERE id = ?', [data['judagor_id_store']]).then(r=>{
-            //     let data = res.rows.item(0);
-                if(data.partido == 'S1')
+           
+                if(data.partido == 'p11')
                         this.vs1_j1 = data['jugador_nombre'];
-                if(data.partido == 'S2')
+                if(data.partido == 'p12')
+                        this.vs1_j2 = data['jugador_nombre'];
+
+                if(data.partido == 'p21')
                         this.vs2_j1 = data['jugador_nombre'];
-                if(data.partido == 'D1')
+                if(data.partido == 'p22')
+                        this.vs2_j2 = data['jugador_nombre'];
+                        
+                if(data.partido == 'p31')
                         this.vd1_j1 = data['jugador_nombre'];
-                if(data.partido == 'D2')
+                if(data.partido == 'p32')
                         this.vd1_j2 = data['jugador_nombre'];
-            //});
             }  
                     
 

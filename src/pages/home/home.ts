@@ -57,8 +57,13 @@ export class HomePage {
 
   listEncuentros(refresher)
   {
-    this._es.getEncuentros();
-    
+  
+    this._es.getEncuentros().then(res=>{
+      this.listEncuentrosStore();
+    });
+
+    refresher.complete();
+
     // //this._utilsService.showMessages('Mensaje','Actualizando ...');
 
     // this._es.getEncuentros().then((result)=>{
@@ -77,8 +82,7 @@ export class HomePage {
 
 
     
-    this.listEncuentrosStore();
-    refresher.complete();
+  
 
     //this._es.getEncuentros().subscribe( data=>{ this.encuentro = data; console.table(data) });
   }
@@ -86,8 +90,10 @@ export class HomePage {
 
   listEncuentrosStore()
   {
-    this._es.getEncuentrosStore().then((result)=>{
+    console.log('com guarda');
+    return this._es.getEncuentrosStore().then((result)=>{
       let enc = [];
+     
       for (let index = 0; index < result.rows.length; index++) {
         enc.push( result.rows.item(index) );
       }
