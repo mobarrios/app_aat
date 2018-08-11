@@ -94,6 +94,35 @@ export class MatchDetailPage {
        public d1v2:string;
        public d1l3:string;
        public d1v3:string;
+
+
+        public locAdic1P1Dni ;
+        public locAdic1P1N ;
+        public locAdic2P1Dni ;
+        public locAdic2P1N ;
+        public visAdic1P1Dni ;
+        public visAdic1P1N ;
+        public visAdic2P1Dni ;
+        public visAdic2P1N ;
+
+        public locAdic1P2Dni ;
+        public locAdic1P2N ;
+        public locAdic2P2Dni ;
+        public locAdic2P2N ;
+        public visAdic1P2Dni ;
+        public visAdic1P2N ;
+        public visAdic2P2Dni ;
+        public visAdic2P2N ;
+
+        public locAdic1P3Dni ;
+        public locAdic1P3N ;
+        public locAdic2P3Dni ;
+        public locAdic2P3N ;
+        public visAdic1P3Dni ;
+        public visAdic1P3N ;
+        public visAdic2P3Dni ;
+        public visAdic2P3N ;
+
   
 
   constructor(  public navCtrl: NavController, 
@@ -255,12 +284,15 @@ export class MatchDetailPage {
         for (let i = 0; i < res.rows.length; i++) 
         {
           let data = res.rows.item(i);
-          
-              //console.log(res.rows.item(i).jugador_id); 
-              if(data.lv == 'l' && data.partido == 'p11')
+            if(data.lv == 'l' && data.partido == 'p11')
               {
                   this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s1_loc_jug_1 = r.rows.item(0).id_jugador;
+                        if(r.rows.item(0).id_jugador == null)
+                        {
+                            this.locAdic1P1Dni = r.rows.item(0).dni ;
+                            this.locAdic1P1N = r.rows.item(0).nombre;
+                        }
                   });
                 this.s1_loc_jug_n_1 = data.jugador_nombre;
               }
@@ -268,6 +300,11 @@ export class MatchDetailPage {
               {
                   this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s1_loc_jug_2 = r.rows.item(0).id_jugador;
+                        if(r.rows.item(0).id_jugador == null)
+                        {
+                            this.locAdic2P1Dni = r.rows.item(0).dni ;
+                            this.locAdic2P1N = r.rows.item(0).nombre;
+                        }
                   });
                 this.s1_loc_jug_n_2 = data.jugador_nombre;
               }
@@ -276,7 +313,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s1_vis_jug_1 = r.rows.item(0).id_jugador;
-                    console.log(r.rows.item(0));
+                        if(r.rows.item(0).id_jugador == null)
+                        {
+                            this.visAdic1P1Dni = r.rows.item(0).dni ;
+                            this.visAdic1P1N = r.rows.item(0).nombre;
+                        }
                   });
                 this.s1_vis_jug_n_1 = data.jugador_nombre;
               }
@@ -285,6 +326,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s1_vis_jug_2 = r.rows.item(0).id_jugador;
+                        if(r.rows.item(0).id_jugador == null)
+                        {
+                            this.visAdic2P1Dni = r.rows.item(0).dni ;
+                            this.visAdic2P1N = r.rows.item(0).nombre;
+                        }
                   });
                 this.s1_vis_jug_n_2 = data.jugador_nombre;
               }
@@ -295,6 +341,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s2_loc_jug_1 = r.rows.item(0).id_jugador;
+                        if(r.rows.item(0).id_jugador == null)
+                        {
+                            this.locAdic1P2Dni = r.rows.item(0).dni ;
+                            this.locAdic1P2N = r.rows.item(0).nombre;
+                        }
                   });
                 this.s2_loc_jug_n_1 = data.jugador_nombre;
               }
@@ -302,6 +353,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s2_loc_jug_2 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.locAdic2P2Dni = r.rows.item(0).dni ;
+                        this.locAdic2P2N = r.rows.item(0).nombre;
+                    }
                   });
                 this.s2_loc_jug_n_2 = data.jugador_nombre;
               }
@@ -310,6 +366,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s2_vis_jug_1 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.visAdic1P2Dni = r.rows.item(0).dni ;
+                        this.visAdic1P2N = r.rows.item(0).nombre;
+                    }
                   });
                 this.s2_vis_jug_n_1 = data.jugador_nombre;
               }
@@ -317,6 +378,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.s2_vis_jug_2 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.visAdic2P2Dni = r.rows.item(0).dni ;
+                        this.visAdic2P2N = r.rows.item(0).nombre;
+                    }
                   });
                 this.s2_vis_jug_n_2 = data.jugador_nombre;
               }
@@ -326,6 +392,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_loc_jug_1 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.locAdic1P3Dni = r.rows.item(0).dni ;
+                        this.locAdic1P3N = r.rows.item(0).nombre;
+                    }
                   });
                 this.d1_loc_jug_1_n = data.jugador_nombre;
               }
@@ -333,6 +404,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_loc_jug_2 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.locAdic2P3Dni = r.rows.item(0).dni ;
+                        this.locAdic2P3N = r.rows.item(0).nombre;
+                    }
                   });
                 this.d1_loc_jug_2_n = data.jugador_nombre;
               }
@@ -340,6 +416,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_vis_jug_1 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.visAdic1P3Dni = r.rows.item(0).dni ;
+                        this.visAdic1P3N = r.rows.item(0).nombre;
+                    }
                   });
                 this.d1_vis_jug_1_n = data.jugador_nombre;
               }
@@ -347,6 +428,11 @@ export class MatchDetailPage {
               {
                 this._db.db.executeSql('SELECT * FROM jugadores where id = ?',[data.jugador_id_store]).then(r=>{
                     this.d1_vis_jug_2 = r.rows.item(0).id_jugador;
+                    if(r.rows.item(0).id_jugador == null)
+                    {
+                        this.visAdic2P3Dni = r.rows.item(0).dni ;
+                        this.visAdic2P3N = r.rows.item(0).nombre;
+                    }
                   });
                 this.d1_vis_jug_2_n = data.jugador_nombre;
               }
@@ -357,7 +443,6 @@ export class MatchDetailPage {
 
   sendData()
   {
-
     let data =  {
       'encuentroId':this.encuentroId,
       'partidos':[
@@ -371,14 +456,32 @@ export class MatchDetailPage {
           'jugadorIdVisita2' : this.s1_vis_jug_2,
           'sets': this.s1_sets,
           "incidente": this.incidencias,
-        //   "jugadoresAdicionales": [
-        //     {
-        //         "id": 0,
-        //         "equipoId": this.local_id,
-        //         "numeroDocumento": 12345678,
-        //         "nombre": "Leandrito"
-        //     }
-        // ]
+          "jugadoresAdicionales": [
+            {
+                "id": 0,
+                "equipoId": this.local_id,
+                "numeroDocumento": this.locAdic1P1Dni,
+                "nombre": this.locAdic1P1N
+            },
+            {
+                "id": 0,
+                "equipoId": this.local_id,
+                "numeroDocumento": this.locAdic2P1Dni,
+                "nombre": this.locAdic2P1N
+            },
+            {
+                "id": 0,
+                "equipoId": this.visita_id,
+                "numeroDocumento":this.visAdic1P1Dni,
+                "nombre": this.visAdic1P1N
+            },
+            {
+                "id": 0,
+                "equipoId": this.visita_id,
+                "numeroDocumento": this.visAdic2P1Dni,
+                "nombre": this.visAdic2P1N
+            }
+        ]
         },
         {
           'tipo':this.p2_tipo,
@@ -389,7 +492,33 @@ export class MatchDetailPage {
           'jugadorIdVisita1' : this.s2_vis_jug_1,
           'jugadorIdVisita2' : this.s2_vis_jug_2,
           'sets':this.s2_sets,
-          "incidente": this.incidencias
+          "incidente": this.incidencias,
+          "jugadoresAdicionales": [
+            {
+                "id": 0,
+                "equipoId": this.local_id,
+                "numeroDocumento": this.locAdic1P2Dni,
+                "nombre": this.locAdic1P2N
+            },
+            {
+                "id": 0,
+                "equipoId": this.local_id,
+                "numeroDocumento": this.locAdic2P2Dni,
+                "nombre": this.locAdic2P2N
+            },
+            {
+                "id": 0,
+                "equipoId": this.visita_id,
+                "numeroDocumento": this.visAdic1P2Dni,
+                "nombre": this.visAdic1P2N
+            },
+            {
+                "id": 0,
+                "equipoId": this.visita_id,
+                "numeroDocumento": this.visAdic2P2Dni,
+                "nombre": this.visAdic2P2N
+            }
+        ]
         },
         {
           'tipo':this.p3_tipo,
@@ -400,22 +529,48 @@ export class MatchDetailPage {
           'jugadorIdVisita1' : this.d1_vis_jug_1,
           'jugadorIdVisita2' : this.d1_vis_jug_2,
           'sets': this.d1_sets,
-          "incidente": this.incidencias
+          "incidente": this.incidencias,
+          "jugadoresAdicionales": [
+            {
+                "id": 0,
+                "equipoId": this.local_id,
+                "numeroDocumento": this.locAdic1P3Dni,
+                "nombre": this.locAdic1P3N
+            },
+            {
+                "id": 0,
+                "equipoId": this.local_id,
+                "numeroDocumento": this.locAdic2P3Dni,
+                "nombre": this.locAdic2P3N
+            },
+            {
+                "id": 0,
+                "equipoId": this.visita_id,
+                "numeroDocumento": this.visAdic1P3Dni,
+                "nombre": this.visAdic1P3N
+            },
+            {
+                "id": 0,
+                "equipoId": this.visita_id,
+                "numeroDocumento": this.visAdic2P3Dni,
+                "nombre": this.visAdic2P3N
+            }
+        ]
         }
       ]
     };
 
-    console.table(data);
+    console.log(data);
 
-     this._es.postEncuentrosResultados(data).then(res=>{
+    //  this._es.postEncuentrosResultados(data).then(res=>{
         
-        this._db.db.executeSql('UPDATE encuentros SET resultados_id=? WHERE encuentro_id=?',[ res['id'], this.encuentroId ]);
-        this.resultsId = res['id'] ;
-        this._ut.showMessages('Mensaje','Resultado Enviado Correctamente.',true);
+    //     this._db.db.executeSql('UPDATE encuentros SET resultados_id=? WHERE encuentro_id=?',[ res['id'], this.encuentroId ]);
+    //     this.resultsId = res['id'] ;
+    //     this._ut.showMessages('Mensaje','Resultado Enviado Correctamente.',true);
 
-     },(err)=>{
-       console.log(err);
-     });
+    //  },(err)=>{
+    //    console.log(err);
+    //  });
     
   }
 
