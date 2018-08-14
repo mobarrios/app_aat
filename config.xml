@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="ar.com.coders.aat" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>AAT</name>
+    <name>AAT Interclubes</name>
     <description>Asociación Argentina de Tenis.</description>
     <author email="manuelobarrios@gmail.com" href="http://coders.com/">Coders Team</author>
     <content src="index.html" />
@@ -85,6 +85,6 @@
     <plugin name="cordova-sqlite-storage" spec="^2.3.3" />
     <allow-navigation href="http://192.168.0.102:8100" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.5" />
 </widget>
