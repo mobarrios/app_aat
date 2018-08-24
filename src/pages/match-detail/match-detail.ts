@@ -264,17 +264,17 @@ export class MatchDetailPage {
       
         if(this.s1_l_t_sets > this.s1_v_t_sets)
             this.total_local += 1;
-        else
+        else if (this.s1_l_t_sets < this.s1_v_t_sets)
             this.total_visita += 1;
-
+        
         if(this.s2_l_t_sets > this.s2_v_t_sets)
             this.total_local += 1;
-        else
+        else if (this.s2_l_t_sets < this.s2_v_t_sets)
             this.total_visita += 1;
 
         if(this.d1_l_t_sets > this.d1_v_t_sets)
             this.total_local += 1;
-        else
+        else if(this.d1_l_t_sets < this.d1_v_t_sets)
             this.total_visita += 1;
        
 

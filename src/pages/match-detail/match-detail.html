@@ -6,9 +6,9 @@
 -->
 <ion-header>
 
-  <ion-navbar color="aat">
-    <ion-title>Encuentro # {{encuentroId}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="aat">
+        <ion-title>Encuentro # {{encuentroId}}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
@@ -16,49 +16,51 @@
 
     <ion-grid>
         <ion-row>
-          <ion-col col-6>
-              <ion-card>
-                  <ion-card-header text-center>
-                     <strong ion-text >{{local_nombre}}</strong>
-                     <p>#{{local_id}}</p>
-                     <ion-badge class="resultado">{{total_local}}</ion-badge>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <!-- <p>Capitán</p><strong>Nicolas Monja</strong> -->
-                  </ion-card-content>
-                </ion-card>
-          </ion-col>
-          <ion-col col-6 ter>
-              <ion-card>
-                  <ion-card-header text-center>
-                     <strong ion-text >{{visita_nombre}}</strong>
-                     <p>#{{visita_id}}</p>
-                     <ion-badge class="resultado">{{total_visita}}</ion-badge>
-                  </ion-card-header>
-                  <ion-card-content>
-                      <!-- <p>Capitán</p><strong>Dodo Leandro</strong> -->
+            <ion-col col-6>
+                <ion-card>
+                    <ion-card-header text-center>
+                        <strong ion-text>{{local_nombre}}</strong>
+                        <p>#{{local_id}}</p>
+                        <ion-badge class="resultado">{{total_local}}</ion-badge>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <!-- <p>Capitán</p><strong>Nicolas Monja</strong> -->
                     </ion-card-content>
                 </ion-card>
-          </ion-col>
+            </ion-col>
+            <ion-col col-6 ter>
+                <ion-card>
+                    <ion-card-header text-center>
+                        <strong ion-text>{{visita_nombre}}</strong>
+                        <p>#{{visita_id}}</p>
+                        <ion-badge class="resultado">{{total_visita}}</ion-badge>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <!-- <p>Capitán</p><strong>Dodo Leandro</strong> -->
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
         </ion-row>
         <ion-row>
             <ion-col col-12>
-              <ion-card>
-                  <ion-card-content>
-                      <ion-row>
-                          <ion-col><p>Fecha</p><strong>{{fecha}}</strong> </ion-col>
-                          <ion-col><p>Incidencia</p>
-                            <div [ngSwitch]="incidencias">
+                <ion-card>
+                    <ion-card-content>
+                        <ion-row>
+                            <ion-col>
+                                <p>Fecha</p><strong>{{fecha}}</strong> </ion-col>
+                            <ion-col>
+                                <p>Incidencia</p>
+                                <div [ngSwitch]="incidencias">
                                     <p *ngSwitchCase="1"><strong>Ganador</strong></p>
                                     <p *ngSwitchCase="3"><strong>WO</strong></p>
                                     <p *ngSwitchCase="7"><strong>Reprogramar</strong></p>
                                     <p *ngSwitchDefault>...</p>
-                            </div>
-                        </ion-col>
+                                </div>
+                            </ion-col>
 
-                      </ion-row>
-                  </ion-card-content>
-              </ion-card>
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
             </ion-col>
         </ion-row>
 
@@ -67,28 +69,28 @@
             <ion-col col-12>
                 <ion-card>
                     <ion-card-header text-center>
-                        <strong ion-text  color="aat">Partido 1 </strong>
-                        </ion-card-header>
+                        <strong ion-text color="aat">Partido 1 </strong>
+                    </ion-card-header>
                     <ion-card-content>
                         <ion-row>
-                        <ion-col col-6></ion-col>
-                        <ion-col>Set 1</ion-col>
-                        <ion-col>Set 2</ion-col>
-                        <ion-col>Set 3</ion-col>
-                        <ion-col></ion-col>
+                            <ion-col col-6></ion-col>
+                            <ion-col>Set 1</ion-col>
+                            <ion-col>Set 2</ion-col>
+                            <ion-col>Set 3</ion-col>
+                            <!-- <ion-col></ion-col> -->
                         </ion-row>
                         <ion-row>
-                            <ion-col  col-6>{{local_nombre}}
+                            <ion-col col-6>{{local_nombre}}
                                 <strong>{{s1_loc_jug_n_1}}</strong>
                                 <strong>{{s1_loc_jug_n_2}}</strong>
                             </ion-col>
                             <ion-col>{{s1l1}}</ion-col>
                             <ion-col>{{s1l2}}</ion-col>
                             <ion-col>{{s1l3}}</ion-col>
-                            <ion-col><ion-badge >{{s1_l_t_sets}}</ion-badge></ion-col>
+                            <!-- <ion-col><ion-badge >{{s1_l_t_sets}}</ion-badge></ion-col> -->
                         </ion-row>
                         <ion-row>
-                            <ion-col  col-6>
+                            <ion-col col-6>
                                 {{visita_nombre}}
                                 <strong>{{s1_vis_jug_n_1}}</strong>
                                 <strong>{{s1_vis_jug_n_2}}</strong>
@@ -96,8 +98,8 @@
                             <ion-col>{{s1v1}}</ion-col>
                             <ion-col>{{s1v2}}</ion-col>
                             <ion-col>{{s1v3}}</ion-col>
-                            <ion-col><ion-badge >{{s1_v_t_sets}}</ion-badge></ion-col>
-                            </ion-row>
+                            <!-- <ion-col><ion-badge >{{s1_v_t_sets}}</ion-badge></ion-col> -->
+                        </ion-row>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
@@ -105,18 +107,18 @@
             <ion-col col-12>
                 <ion-card>
                     <ion-card-header text-center>
-                        <strong ion-text  color="aat">Partido 2 </strong>
-                        </ion-card-header>
+                        <strong ion-text color="aat">Partido 2 </strong>
+                    </ion-card-header>
                     <ion-card-content>
                         <ion-row>
-                        <ion-col col-6></ion-col>
-                        <ion-col>Set 1</ion-col>
-                        <ion-col>Set 2</ion-col>
-                        <ion-col>Set 3</ion-col>
-                        <ion-col></ion-col>
+                            <ion-col col-6></ion-col>
+                            <ion-col>Set 1</ion-col>
+                            <ion-col>Set 2</ion-col>
+                            <ion-col>Set 3</ion-col>
+                            <!-- <ion-col></ion-col> -->
                         </ion-row>
                         <ion-row>
-                            <ion-col  col-6>
+                            <ion-col col-6>
                                 {{local_nombre}}
                                 <strong>{{s2_loc_jug_n_1}}</strong>
                                 <strong>{{s2_loc_jug_n_2}}</strong>
@@ -124,91 +126,88 @@
                             <ion-col>{{s2l1}}</ion-col>
                             <ion-col>{{s2l2}}</ion-col>
                             <ion-col>{{s2l3}}</ion-col>
-                            <ion-col><ion-badge >{{s2_l_t_sets}}</ion-badge></ion-col>
+                            <!-- <ion-col><ion-badge >{{s2_l_t_sets}}</ion-badge></ion-col> -->
                         </ion-row>
                         <ion-row>
-                            <ion-col  col-6>
+                            <ion-col col-6>
                                 {{visita_nombre}}
-                                <strong>{{s2_vis_jug_n_1}}</strong> 
-                                <strong>{{s2_vis_jug_n_2}}</strong> 
+                                <strong>{{s2_vis_jug_n_1}}</strong>
+                                <strong>{{s2_vis_jug_n_2}}</strong>
                             </ion-col>
                             <ion-col>{{s2v1}}</ion-col>
                             <ion-col>{{s2v2}}</ion-col>
                             <ion-col>{{s2v3}}</ion-col>
-                            <ion-col><ion-badge >{{s2_v_t_sets}}</ion-badge></ion-col>
-                            </ion-row>
+                            <!-- <ion-col><ion-badge >{{s2_v_t_sets}}</ion-badge></ion-col> -->
+                        </ion-row>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
 
             <ion-col col-12>
-                    <ion-card>
-                        <ion-card-header text-center>
-                            <strong ion-text  color="aat">Partido 3 </strong>
-                            </ion-card-header>
-                        <ion-card-content>
-                            <ion-row>
-                                <ion-col col-6></ion-col>
-                                <ion-col>Set 1</ion-col>
-                                <ion-col>Set 2</ion-col>
-                                <ion-col>Set 3</ion-col>
-                                <ion-col></ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col  col-6>
-                                        {{local_nombre}}
-                                    <strong>{{d1_loc_jug_1_n}}</strong><br>
-                                    <strong>{{d1_loc_jug_2_n}}</strong>
-                                </ion-col>
-                                <ion-col>{{d1l1}}</ion-col>
-                                <ion-col>{{d1l2}}</ion-col>
-                                <ion-col>{{d1l3}}</ion-col>
-                                <ion-col><ion-badge >{{d1_l_t_sets}}</ion-badge></ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col  col-6>
-                                        {{visita_nombre}}
-                                    <strong>{{d1_vis_jug_1_n}}</strong><br>
-                                    <strong>{{d1_vis_jug_2_n}}</strong>
-                                 </ion-col>
-                                <ion-col>{{d1v1}}</ion-col>
-                                <ion-col>{{d1v2}}</ion-col>
-                                <ion-col>{{d1v3}}</ion-col>
-                                <ion-col><ion-badge >{{d1_v_t_sets}}</ion-badge></ion-col>
-                            </ion-row>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
+                <ion-card>
+                    <ion-card-header text-center>
+                        <strong ion-text color="aat">Partido 3 </strong>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-row>
+                            <ion-col col-6></ion-col>
+                            <ion-col>Set 1</ion-col>
+                            <ion-col>Set 2</ion-col>
+                            <ion-col>Set 3</ion-col>
+                            <!-- <ion-col></ion-col> -->
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-6>
+                                {{local_nombre}}
+                                <strong>{{d1_loc_jug_1_n}}</strong><br>
+                                <strong>{{d1_loc_jug_2_n}}</strong>
+                            </ion-col>
+                            <ion-col>{{d1l1}}</ion-col>
+                            <ion-col>{{d1l2}}</ion-col>
+                            <ion-col>{{d1l3}}</ion-col>
+                            <!-- <ion-col><ion-badge >{{d1_l_t_sets}}</ion-badge></ion-col> -->
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-6>
+                                {{visita_nombre}}
+                                <strong>{{d1_vis_jug_1_n}}</strong><br>
+                                <strong>{{d1_vis_jug_2_n}}</strong>
+                            </ion-col>
+                            <ion-col>{{d1v1}}</ion-col>
+                            <ion-col>{{d1v2}}</ion-col>
+                            <ion-col>{{d1v3}}</ion-col>
+                            <!-- <ion-col><ion-badge >{{d1_v_t_sets}}</ion-badge></ion-col> -->
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
 
-            
+            <ion-col col-12>
+                <ion-card>
+                    <ion-card-header text-center>
+                        <strong ion-text>Confirmación</strong>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-input placeholder="Comentarios" [(ngModel)]="comentarios">></ion-input>
 
-
-                <ion-col col-12>
-                        <ion-card>
-                            <ion-card-header text-center>
-                                <strong ion-text>Confirmación</strong>
-                             </ion-card-header>
-                            <ion-card-content>
-                                        <ion-input placeholder="Comentarios" [(ngModel)]="comentarios">></ion-input>
-                                    
-                                    <div  text-center *ngIf="!confirm">
-                                        <button ion-button color="danger"(click)="sendRechazo(false)">
+                        <div text-center *ngIf="!confirm">
+                            <button ion-button color="danger" (click)="sendRechazo(false)">
                                                 Rechazar
                                         </button>
-                                        <button ion-button color="secondary"  (click)="sendConfirmacion(true)">
+                            <button ion-button color="secondary" (click)="sendConfirmacion(true)">
                                             Confirmar
                                         </button>
-                                    </div>
-                            </ion-card-content>
-                        </ion-card>
-                </ion-col>
-                
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+
         </ion-row>
         <div *ngIf="resultsId==null">
-                <button ion-button secondary full (click)="sendData()">
+            <button ion-button secondary full (click)="sendData()">
                     Enviar Datos
                 </button>
         </div>
-      </ion-grid>
+    </ion-grid>
 
 </ion-content>

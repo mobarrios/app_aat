@@ -42,10 +42,6 @@ export class LoginPage {
       
   }
 
-  test(){
-    console.log('test');
-  }
-
   goToHome() {
       this.navCtrl.setRoot(HomePage);
   }
@@ -72,6 +68,7 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage);
 
     },(err)=>{
+
       this._utilsService.dismissMessages();
       this._utilsService.showMessages('Error','Credenciales Erroneas, Por favor, intente nuevamente.',true) ;
 

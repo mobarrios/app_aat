@@ -63,8 +63,11 @@ export class UsersService {
 
     //testing
     //this.body =  {'email':'hugo.colo@swift.com.ar' , 'password':'Hugocolo345*'};
-   // this.body =  {'email':'ercesio@gmail.com' , 'password':'Cesio*8877'};
+   //this.body =  {'email':'ercesio@gmail.com' , 'password':'Cesio*8877'};
 
+  // this.body =  {'email':'abelgo@gmail.com' , 'password':'Abel1888*'};
+
+  
    this.body =  {'email':user, 'password':pass};
 
     let url = this.url + "/Account/Login"; 

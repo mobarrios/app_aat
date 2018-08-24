@@ -17,19 +17,22 @@ export class MyApp {
 
   rootPage:any = LoginPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, public splashScreen: SplashScreen,
+  constructor( platform: Platform, 
+               statusBar: StatusBar, public splashScreen: SplashScreen,
                public _us:UsersService,
                public _dbs:DataBaseProvider,
                public sqlite: SQLite
               ) {
-    platform.ready().then(() => {
+
+    platform.ready().then(() => 
+    {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       //splashScreen.hide();
       this.createDatabase();
 
-      if(_us.isActive())
+      if(this._us.isActive())
         this.rootPage = HomePage;
       else
         this.rootPage = LoginPage;
