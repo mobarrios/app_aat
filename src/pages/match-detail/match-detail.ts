@@ -33,6 +33,11 @@ export class MatchDetailPage {
   public p2_tipo;
   public p3_tipo;
 
+  public tipo_1;
+  public tipo_2;
+  public tipo_3;
+
+
   public s1_loc_jug_1 = 0 ;
   public s1_loc_jug_n_1;
   public s1_loc_jug_2 = 0 ;
@@ -156,6 +161,9 @@ export class MatchDetailPage {
               this.p1_tipo =  data.p1_tipo;
               this.p2_tipo =  data.p2_tipo;
               this.p3_tipo =  data.p3_tipo;
+              this.tipo_1 =  this._es.getTipoDePartido(data.p1_tipo);
+              this.tipo_2 =  this._es.getTipoDePartido(data.p2_tipo);
+              this.tipo_3 =  this._es.getTipoDePartido(data.p3_tipo);
         }
       });
 
@@ -456,6 +464,8 @@ export class MatchDetailPage {
 
   sendData()
   {
+    this._ut.showMessages('Mensaje','Enviando Resultados...',false);
+
     let data =  {
       'encuentroId':this.encuentroId,
       'partidos':[
@@ -574,13 +584,11 @@ export class MatchDetailPage {
     };
 
 
-     this._es.postEncuentrosResultados(data).then(res=>{
-        
+     this._es.postEncuentrosResultados(data).then(res=>
+    { 
         this._db.db.executeSql('UPDATE encuentros SET resultados_id=? WHERE encuentro_id=?',[ res['id'], this.encuentroId ]);
         this.resultsId = res['id'] ;
-        this._ut.showMessages('Mensaje','Resultado Enviado Correctamente.',true);
-        console.log(res);
-
+        this._ut.dismissMessages();
      },(err)=>{
        console.log(err);
      });
@@ -589,9 +597,11 @@ export class MatchDetailPage {
 
   sendConfirmacion(confirma:boolean)
   {
+    this._ut.showMessages('Mensaje','Enviando Resultados...',false);
+
     this._es.postConfirmacion(this.resultsId,confirma,this.comentarios).then(res=>{
         this._db.db.executeSql('UPDATE encuentros SET confirmacion=?, confirmacion_comentario=? WHERE encuentro_id=?',[confirma, this.comentarios , this.encuentroId ]);
-        this._ut.showMessages("Mensaje","Confirmación enviada.",true);
+        this._ut.dismissMessages();
     });
   }
 

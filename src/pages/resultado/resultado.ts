@@ -67,7 +67,11 @@ export class ResultadoPage {
   public vd_2:any = 0;
   public vd_3:any = 0;
 
-  public incidencias = "1" ;
+  public incidencias = "0" ;
+
+  public tipo1;
+  public tipo2;
+  public tipo3;
 
 
   constructor(
@@ -135,99 +139,153 @@ export class ResultadoPage {
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'S1','1' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','S1','1', this.ls1_1]);
+      else
+        this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','S1','1', this.ls1_1, res.rows.item(0).id]);
+
     });  
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'S1','2' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','S1','2', this.ls1_2]);
-    });   
+        else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','S1','2', this.ls1_2, res.rows.item(0).id]);
+ 
+        });   
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'S1','3' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','S1','3', this.ls1_3]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','S1','3', this.ls1_3, res.rows.item(0).id]);
+ 
+        });  
 
     // SINGLE 1 VISITA
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'S1','1' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','S1','1', this.vs1_1]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','S1','1', this.vs1_1, res.rows.item(0).id]);
+ 
+        });  
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'S1','2' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','S1','2', this.vs1_2]);
-    });   
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','S1','2', this.vs1_2, res.rows.item(0).id]);
+ 
+        });   
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'S1','3' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','S1','3', this.vs1_3]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','S1','3', this.vs1_3, res.rows.item(0).id]);
+ 
+        });  
 
     // SINGLE 2 LOCAL
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'S2','1' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','S2','1', this.ls2_1]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','S2','1', this.ls2_1, res.rows.item(0).id]);
+ 
+        });  
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'S2','2' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','S2','2', this.ls2_2]);
-    });   
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','S2','2', this.ls2_2, res.rows.item(0).id]);
+ 
+        });   
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'S2','3' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','S2','3', this.ls2_3]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','S2','3', this.ls2_3, res.rows.item(0).id]);
+ 
+        });  
 
 
     // SINGLE 2 VISITA
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'S2','1' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','S2','1', this.vs2_1]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','S2','1', this.vs2_1, res.rows.item(0).id]);
+ 
+        });  
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'S2','2' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','S2','2', this.vs2_2]);
-    });   
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','S2','2', this.vs2_2, res.rows.item(0).id]);
+ 
+        });   
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'S2','3' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','S2','3', this.vs2_3]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','S2','3', this.vs2_3, res.rows.item(0).id]);
+ 
+        });  
 
 
     // DOBLES LOCAL
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'D1','1' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','D1','1', this.ld_1]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','D1','1', this.ld_1, res.rows.item(0).id]);
+ 
+        });  
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'D1','2' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','D1','2', this.ld_2]);
-    });   
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','D1','2', this.ld_2, res.rows.item(0).id]);
+ 
+        });   
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'l', 'D1','3' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'l','D1','3', this.ld_3]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'l','D1','3', this.ld_3, res.rows.item(0).id]);
+ 
+        });  
 
     // DOBLES VISITA
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'D1','1' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','D1','1', this.vd_1]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','D1','1', this.vd_1, res.rows.item(0).id]);
+ 
+        });  
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'D1','2' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','D1','2', this.vd_2]);
-    });   
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','D1','2', this.vd_2, res.rows.item(0).id]);
+ 
+        });   
 
     this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ? AND lv = ? AND partido = ? AND n_set = ?',[ this.encuentroId, 'v', 'D1','3' ]).then(res => {
       if(res.rows.length == 0)
          this._db.db.executeSql('INSERT INTO encuentros_resultados(encuentro_id,lv,partido,n_set,puntos) VALUES(?,?,?,?,?)', [ this.encuentroId, 'v','D1','3', this.vd_3]);
-    });  
+         else
+         this._db.db.executeSql('UPDATE encuentros_resultados SET encuentro_id = ? ,lv = ?, partido =? , n_set = ?, puntos = ? where id = ?', [ this.encuentroId, 'v','D1','3', this.vd_3, res.rows.item(0).id]);
+ 
+        });  
 
     this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ?',[this.encuentroId]).then(res =>{
            this._db.db.executeSql('UPDATE encuentros SET incidencias = ? WHERE encuentro_id = ?', [this.incidencias, this.encuentroId]);
@@ -254,6 +312,11 @@ export class ResultadoPage {
         this.localId = data.club_local_id;
         this.visitaId = data.club_visita_id;
         this.incidencias = data.incidencias;
+        this.tipo1 = this._es.getTipoDePartido(data.p1_tipo);
+        this.tipo2 = this._es.getTipoDePartido(data.p2_tipo);
+        this.tipo3 = this._es.getTipoDePartido(data.p3_tipo);
+
+
       });
 
 

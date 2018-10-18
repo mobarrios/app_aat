@@ -5,6 +5,7 @@ import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { DataBaseProvider } from '../data-base/dataBase';
 import { UtilsService } from '../utils/utils';
+import { unwatchFile } from 'fs';
 
 /*
   Generated class for the EncuentrosProvider provider.
@@ -16,6 +17,8 @@ import { UtilsService } from '../utils/utils';
 export class EncuentrosService {
 
   url:string = 'http://interclubes-aat-api.sysmo.com.ar/api';
+  //url:string = 'http://test-interclubes-aat-api.sysmo.com.ar/api';
+
   token:any;
  
   constructor(public http: HttpClient,
@@ -80,11 +83,12 @@ export class EncuentrosService {
     };
     let url = this.url + '/encuentro';
 
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => 
+    {
       this.http.get(url,httpOptions).subscribe(
         res=>{
-          this.storeEncuentros(res);
-          resolve(res);
+                this.storeEncuentros(res);
+                resolve(res);
       },
         (err)=>{reject(err);
       })
@@ -93,6 +97,31 @@ export class EncuentrosService {
     //return this.http.get(url, httpOptions);
   }
 
+
+  removeEncuentrosStore(){
+    let user = this._us.user.id;
+
+    this._db.db.executeSql('SELECT * FROM encuentros where user_id = ? ',[user]).then( r => {
+
+      if(r.rows.length >= 1)
+        {
+           this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ?',[ r.rows.item(0).encuentro_id ]).then(r1=>{
+             if(r1.rows.lenght == 0)  
+             {
+                this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ?',[ r.rows.item(0).encuentro_id ]).then(r2=>{
+                  if(r2.rows.lenght == 0)  
+                    {
+                      this._db.db.executeSql('DELETE from encuentros where encuentro_id = ?',[r.rows.item(0).encuentro_id]);
+                      console.log('borrado');
+                    }
+                });
+             } 
+           });
+        }
+        console.log('noborrrado');
+      
+    });
+  }
 
   getEncuentrosStore()
   {
@@ -115,55 +144,65 @@ export class EncuentrosService {
   {
     let user = this._us.user.id;
 
+    //recorre los registros traidos por la API 
     for (let index = 0; index < res.length; index++) 
     {
-             this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ? AND user_id = ?',  [res[index].id, user]).then(r=>{
-      
-              if(r.rows.length == 0)
+            //por cada registro busca en la base local si se encuetran los encuentro del usuario
+             this._db.db.executeSql('SELECT * FROM encuentros where encuentro_id = ? AND user_id = ?',  [res[index].id, user]).then( r => 
               {
-                let resId;
-                let p1Tipo = 's';
-                let p2Tipo = 's';
-                let p3Tipo = 's';
-                let incidente = 1;
+                  // si no hay encuentros los guarda
+                  if(r.rows.length == 0)
+                  {
+                      let resId;
+                      let p1Tipo = 's';
+                      let p2Tipo = 's';
+                      let p3Tipo = 's';
+                      let incidente = 1;
 
-                
-                if(res[index].resultados.length >= 1)
-                {
-                  resId = res[index].resultados[0].id;
+                      
+                      if(res[index].resultados.length >= 1)
+                      {
+                        resId = res[index].resultados[0].id;
 
-                  // if(res[index].resultados[0].partidos != 'NULL')
-                  // {
-                  //   console.log(res[index].resultados[0].partidos[0].incidente);
-                  // }
-                }
+                        // if(res[index].resultados[0].partidos != 'NULL')
+                        // {
+                        //   console.log(res[index].resultados[0].partidos[0].incidente);
+                        // }
+                      }
+                      let sql = 'INSERT INTO encuentros(user_id ,encuentro_id, equipo_local_id, equipo_visita_id, club_local_id, club_local_nombre, club_visita_id, club_visita_nombre, campeonato,categoria,division, fecha, resultados_id,p1_tipo, p2_tipo, p3_tipo,incidencias) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+                      
+                      this._db.db.executeSql( sql, [ 
+                        user,
+                        res[index].id, 
+                        res[index].equipoLocal.id ,
+                        res[index].equipoVisitante.id ,
+                        res[index].equipoLocal.club.id ,
+                        res[index].equipoLocal.club.nombre ,
+                        res[index].equipoVisitante.club.id,
+                        res[index].equipoVisitante.club.nombre ,
+                        res[index].campeonato.descripcion, 
+                        res[index].categoria.descripcion, 
+                        res[index].division.descripcion,
+                        res[index].fecha,
+                        resId,
+                        p1Tipo,
+                        p2Tipo,
+                        p3Tipo,
+                        incidente
+                      ]);
+                    
+                    }else{
 
-                let sql = 'INSERT INTO encuentros(user_id ,encuentro_id, equipo_local_id, equipo_visita_id, club_local_id, club_local_nombre, club_visita_id, club_visita_nombre, campeonato,categoria,division, fecha, resultados_id,p1_tipo, p2_tipo, p3_tipo,incidencias) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-                this._db.db.executeSql(sql, [ 
-                  user,
-                  res[index].id, 
-                  res[index].equipoLocal.id ,
-                  res[index].equipoVisitante.id ,
-                  res[index].equipoLocal.club.id ,
-                  res[index].equipoLocal.club.nombre ,
-                  res[index].equipoVisitante.club.id,
-                  res[index].equipoVisitante.club.nombre ,
-                  res[index].campeonato.descripcion, 
-                  res[index].categoria.descripcion, 
-                  res[index].division.descripcion,
-                  res[index].fecha,
-                  resId,
-                  p1Tipo,
-                  p2Tipo,
-                  p3Tipo,
-                  incidente
-                ]);
-              }
+                      let sql = 'DELETE FROM encuentros WHERE encuentro_id = ?';          
+                      this._db.db.executeSql( sql,[r.rows.index(0).encuentro_id]);
+                    }
+
+
+
             }); 
             
             
-            this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ?',  [res[index].id]).then(r=>
-              {
+            this._db.db.executeSql('SELECT * FROM encuentros_resultados where encuentro_id = ?',  [res[index].id]).then( r => {
               if(r.rows.length == 0)
               {
                 this.getEncuentro(res[index].id).subscribe(
@@ -176,8 +215,7 @@ export class EncuentrosService {
               }
             }); 
 
-            this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ?',  [res[index].id]).then(r=>
-              {
+            this._db.db.executeSql('SELECT * FROM encuentros_jugadores where encuentro_id = ?',  [res[index].id]).then(r=>{
               if(r.rows.length == 0)
               {
                 this.getEncuentro(res[index].id).subscribe(
@@ -190,9 +228,8 @@ export class EncuentrosService {
                   });
               }
             }); 
+    }
 
-
-        }
   }
 
   storeEncuentrosJugadores(res)
@@ -507,6 +544,27 @@ export class EncuentrosService {
     });
    
   }
+
+
+
+//tipo de partido 
+
+getTipoDePartido(tipo:any)
+{
+  let t;
+  if(tipo == 's1')
+    t = 'Single 1'
+  if(tipo == 's2')
+    t = 'Single 2'
+  if(tipo == 'd1')
+    t = 'Dobles 1'
+  if(tipo == 'd2')
+    t = 'Dobles 2'
+  if(tipo == 'd3')
+    t ='Dobles 3'
+
+  return t;
+}
 
 }  
 

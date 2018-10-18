@@ -311,7 +311,6 @@ export class JugadoresPage {
    //cambia el tipo de partido
    cambiaTipo(tipo:any,partido:any)
    {
-    console.log(tipo, partido);
     if(partido == 'p1') 
       this._db.db.executeSql('UPDATE encuentros set p1_tipo = ? WHERE encuentro_id = ?',[ tipo,this.encuentroId]);
 

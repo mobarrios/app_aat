@@ -17,7 +17,9 @@ export class UsersService {
   result:any ;
   body:any ;
   headers:any;
-  url:string = 'http://interclubes-aat-api.sysmo.com.ar/api';
+   url:string = 'http://interclubes-aat-api.sysmo.com.ar/api';
+  // url:string = 'http://test-interclubes-aat-api.sysmo.com.ar/api';
+
 
   public val:boolean;
   public tk;
@@ -65,10 +67,13 @@ export class UsersService {
     //this.body =  {'email':'hugo.colo@swift.com.ar' , 'password':'Hugocolo345*'};
    //this.body =  {'email':'ercesio@gmail.com' , 'password':'Cesio*8877'};
 
-   //this.body =  {'email':'abelgo@gmail.com' , 'password':'Abel1888*'};
 
   
-  this.body =  {'email':user, 'password':pass};
+    this.body =  {'email':user, 'password':pass};
+
+    //this.body =  {'email':'danielfidalgo@hotmail.com' , 'password':'Palito*456'};
+
+    
 
     let url = this.url + "/Account/Login"; 
     

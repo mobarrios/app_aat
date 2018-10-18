@@ -6,9 +6,9 @@
 -->
 <ion-header>
 
-  <ion-navbar  color="aat">
-    <ion-title>Encuentro Nro # {{encuentroId}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="aat">
+        <ion-title>Encuentro Nro # {{encuentroId}}</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
@@ -21,82 +21,127 @@
         </ion-card-header>
         <ion-card-content>
             <ion-list>
+                <ion-item>
+                    <ion-label>Tipo</ion-label>
+                    <ion-select [(ngModel)]="p1_tipo" (ionChange)="cambiaTipo($event,'p1')">
+                        <ion-option value="s1">Single 1</ion-option>
+                        <ion-option value="s2">Single 2</ion-option>
+                        <ion-option value="d1">Dobles 1</ion-option>
+                        <ion-option value="d2">Dobles 2</ion-option>
+                        <ion-option value="d3">Dobles 3</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item-group>
+                    <ion-item-divider color="light">{{localNombre}}</ion-item-divider>
                     <ion-item>
-                        <ion-label>Tipo</ion-label>
-                        <ion-select [(ngModel)]="p1_tipo" (ionChange)="cambiaTipo($event,'p1')">
-                            <ion-option value="s">Single</ion-option>
-                            <ion-option value="d">Doble</ion-option>
-                        </ion-select>
+                        <p>{{singles1local1}}</p>
+                        <ion-icon (click)="agregarJugador('l','p11',local)" name="person-add" item-end color="aat"></ion-icon>
                     </ion-item>
-                    <ion-item-group>
-                            <ion-item-divider color="light">{{localNombre}}</ion-item-divider>
-                            <ion-item><p>{{singles1local1}}</p><ion-icon  (click)="agregarJugador('l','p11',local)" name="person-add" item-end color="aat"></ion-icon></ion-item>
-                            <ion-item *ngIf="p1_tipo=='d'"><p>{{singles1local2}}</p><ion-icon  (click)="agregarJugador('l','p12',local)" name="person-add" item-end color="aat"></ion-icon></ion-item> 
-                    </ion-item-group>
-                    <ion-item-group>
-                            <ion-item-divider color="light">{{visitaNombre}}</ion-item-divider>
-                            <ion-item><p>{{singles1visita1}}</p><ion-icon  (click)="agregarJugador('v','p11',visita)" name="person-add" item-end color="aat"></ion-icon></ion-item>
-                            <ion-item *ngIf="p1_tipo=='d'"><p>{{singles1visita2}}</p><ion-icon  (click)="agregarJugador('v','p12',visita)" name="person-add" item-end color="aat"></ion-icon></ion-item> 
-                    </ion-item-group>
+                    <ion-item *ngIf="p1_tipo=='d1' || p1_tipo=='d2' || p1_tipo=='d3'">
+                        <p>{{singles1local2}}</p>
+                        <ion-icon (click)="agregarJugador('l','p12',local)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                </ion-item-group>
+                <ion-item-group>
+                    <ion-item-divider color="light">{{visitaNombre}}</ion-item-divider>
+                    <ion-item>
+                        <p>{{singles1visita1}}</p>
+                        <ion-icon (click)="agregarJugador('v','p11',visita)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                    <ion-item *ngIf="p1_tipo=='d1' || p1_tipo=='d2' || p1_tipo=='d3'">
+                        <p>{{singles1visita2}}</p>
+                        <ion-icon (click)="agregarJugador('v','p12',visita)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                </ion-item-group>
             </ion-list>
         </ion-card-content>
     </ion-card>
 
     <ion-card>
-            <ion-card-header text-center>
-                <strong>PARTIDO 2</strong>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-list>
-                        <ion-item>
-                            <ion-label>Tipo</ion-label>
-                            <ion-select [(ngModel)]="p2_tipo" (ionChange)="cambiaTipo($event,'p2')">
-                                <ion-option value="s">Single</ion-option>
-                                <ion-option value="d">Doble</ion-option>
-                            </ion-select>
-                        </ion-item>
-                        <ion-item-group>
-                                <ion-item-divider color="light">{{localNombre}}</ion-item-divider>
-                                <ion-item><p>{{singles2local1}}</p><ion-icon  (click)="agregarJugador('l','p21',local)" name="person-add" item-end color="aat"></ion-icon></ion-item>
-                                <ion-item *ngIf="p2_tipo=='d'"><p>{{singles2local2}}</p><ion-icon  (click)="agregarJugador('l','p22',local)" name="person-add" item-end color="aat"></ion-icon></ion-item> 
-                        </ion-item-group>
-                        <ion-item-group>
-                                <ion-item-divider color="light">{{visitaNombre}}</ion-item-divider>
-                                <ion-item><p>{{singles2visita1}}</p><ion-icon  (click)="agregarJugador('v','p21',visita)" name="person-add" item-end color="aat"></ion-icon></ion-item>
-                                <ion-item *ngIf="p2_tipo=='d'"><p>{{singles2visita2}}</p><ion-icon  (click)="agregarJugador('v','p22',visita)" name="person-add" item-end color="aat"></ion-icon></ion-item> 
-                        </ion-item-group>
-                </ion-list>
-            </ion-card-content>
-        </ion-card>
+        <ion-card-header text-center>
+            <strong>PARTIDO 2</strong>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Tipo</ion-label>
+                    <ion-select [(ngModel)]="p2_tipo" (ionChange)="cambiaTipo($event,'p2')">
+                        <ion-option value="s1">Single 1</ion-option>
+                        <ion-option value="s2">Single 2</ion-option>
+                        <ion-option value="d1">Dobles 1</ion-option>
+                        <ion-option value="d2">Dobles 2</ion-option>
+                        <ion-option value="d3">Dobles 3</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item-group>
+                    <ion-item-divider color="light">{{localNombre}}</ion-item-divider>
+                    <ion-item>
+                        <p>{{singles2local1}}</p>
+                        <ion-icon (click)="agregarJugador('l','p21',local)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                    <ion-item *ngIf="p2_tipo=='d1' || p2_tipo=='d2' || p2_tipo=='d3'">
+                        <p>{{singles2local2}}</p>
+                        <ion-icon (click)="agregarJugador('l','p22',local)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                </ion-item-group>
+                <ion-item-group>
+                    <ion-item-divider color="light">{{visitaNombre}}</ion-item-divider>
+                    <ion-item>
+                        <p>{{singles2visita1}}</p>
+                        <ion-icon (click)="agregarJugador('v','p21',visita)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                    <ion-item *ngIf="p2_tipo=='d1' || p2_tipo=='d2' || p2_tipo=='d3'">
+                        <p>{{singles2visita2}}</p>
+                        <ion-icon (click)="agregarJugador('v','p22',visita)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                </ion-item-group>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
 
-        <ion-card>
-                <ion-card-header text-center>
-                    <strong>PARTIDO 3</strong>
-                </ion-card-header>
-                <ion-card-content>
-                    <ion-list>
-                            <ion-item>
-                                <ion-label>Tipo</ion-label>
-                                <ion-select [(ngModel)]="p3_tipo" (ionChange)="cambiaTipo($event,'p3')">
-                                    <ion-option value="s">Single</ion-option>
-                                    <ion-option value="d">Doble</ion-option>
-                                </ion-select>
-                            </ion-item>
-                            <ion-item-group>
-                                    <ion-item-divider color="light">{{localNombre}}</ion-item-divider>
-                                    <ion-item><p>{{dobleslocal1}}</p><ion-icon  (click)="agregarJugador('l','p31',local)" name="person-add" item-end color="aat"></ion-icon></ion-item>
-                                    <ion-item *ngIf="p3_tipo=='d'"><p>{{dobleslocal2}}</p><ion-icon  (click)="agregarJugador('l','p32',local)" name="person-add" item-end color="aat"></ion-icon></ion-item> 
-                            </ion-item-group>
-                            <ion-item-group>
-                                    <ion-item-divider color="light">{{visitaNombre}}</ion-item-divider>
-                                    <ion-item><p>{{doblesvisita1}}</p><ion-icon  (click)="agregarJugador('v','p31',visita)" name="person-add" item-end color="aat"></ion-icon></ion-item>
-                                    <ion-item *ngIf="p3_tipo=='d'"><p>{{doblesvisita2}}</p><ion-icon  (click)="agregarJugador('v','p32',visita)" name="person-add" item-end color="aat"></ion-icon></ion-item> 
-                            </ion-item-group>
-                    </ion-list>
-                </ion-card-content>
-            </ion-card>
+    <ion-card>
+        <ion-card-header text-center>
+            <strong>PARTIDO 3</strong>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Tipo</ion-label>
+                    <ion-select [(ngModel)]="p3_tipo" (ionChange)="cambiaTipo($event,'p3')">
+                        <ion-option value="s1">Single 1</ion-option>
+                        <ion-option value="s2">Single 2</ion-option>
+                        <ion-option value="d1">Dobles 1</ion-option>
+                        <ion-option value="d2">Dobles 2</ion-option>
+                        <ion-option value="d3">Dobles 3</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item-group>
+                    <ion-item-divider color="light">{{localNombre}}</ion-item-divider>
+                    <ion-item>
+                        <p>{{dobleslocal1}}</p>
+                        <ion-icon (click)="agregarJugador('l','p31',local)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                    <ion-item *ngIf="p3_tipo=='d1' || p3_tipo=='d2' || p3_tipo=='d3'">
+                        <p>{{dobleslocal2}}</p>
+                        <ion-icon (click)="agregarJugador('l','p32',local)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                </ion-item-group>
+                <ion-item-group>
+                    <ion-item-divider color="light">{{visitaNombre}}</ion-item-divider>
+                    <ion-item>
+                        <p>{{doblesvisita1}}</p>
+                        <ion-icon (click)="agregarJugador('v','p31',visita)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                    <ion-item *ngIf="p3_tipo=='d1' || p3_tipo=='d2' || p3_tipo=='d3'">
+                        <p>{{doblesvisita2}}</p>
+                        <ion-icon (click)="agregarJugador('v','p32',visita)" name="person-add" item-end color="aat"></ion-icon>
+                    </ion-item>
+                </ion-item-group>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
 
-        
+
     <!-- <ion-card>
         <ion-card-header text-center>
          Singles 1 
